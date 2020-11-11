@@ -1,18 +1,11 @@
-import { observable, action, computed, reaction } from "mobx"
+import { observable, computed, configure, action } from 'mobx';
+import EventT from '../models/EventModel'
 
 let dateTime: Date = new Date(2020, 10, 12, 12, 30);
 
-interface dataT {
-    key: string;
-    event: string;
-    date: string;
-    time: string;
-    prior: string;
-};
-
 
 class Store {
-    @observable events: dataT[] = [
+    @observable events: EventT[] = [
         {
             key: '1',
             event: 'событие1',
@@ -36,12 +29,17 @@ class Store {
         },
         {
             key: '4',
-            event: 'событие4',
+            event: 'событие441241',
             date: dateTime.toLocaleDateString(),
             time: dateTime.toLocaleTimeString(),
             prior: 'высокий',
         },
     ]
+
+
+
 }
 
-export default new Store()
+
+
+export default new Store();

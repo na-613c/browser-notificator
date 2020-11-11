@@ -42,7 +42,12 @@ const EventList: FunctionComponent<AppProps> = ({ store }) => {
       dataIndex: 'date',
       key: 'date',
       width: '20%',
-      sorter: (a: eventT, b: eventT) => (new Date(a.date) < new Date(b.date) ? 1 : -1),
+      sorter: (a: eventT, b: eventT) => {
+        const aDate = a.date.split('.').reverse().join('-');
+        const bDate = b.date.split('.').reverse().join('-');
+
+        return new Date(aDate) < new Date(bDate) ? 1 : -1;
+      },
     },
     {
       title: 'Время',
