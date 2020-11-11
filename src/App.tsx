@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import EventList from './components/EvenList/EventList';
 import './App.css';
+import StoreT from './models/StoreModel';
 
-function App() {
+
+type AppProps = { store: StoreT };
+
+const App: FunctionComponent <AppProps> = ({ store }) => {
   return (
     <div className="App">
-      <EventList />
+      <EventList store={store} />
     </div>
   );
-}
+};
 
 export default App;
