@@ -1,11 +1,22 @@
 import React, { FunctionComponent } from 'react';
-import { Table, Input, Button, Space } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { observer, inject } from 'mobx-react';
-import StoreT from '../../models/StoreModel';
-import eventT from '../../models/EventModel';
+import { Table, Tabs } from 'antd';
+import { observer } from 'mobx-react';
+import StoreT from '../../../models/StoreModel';
 
 type AppProps = { store: StoreT };
+interface eventT {
+  key: string;
+  day: number;
+  month: number;
+  year: number;
+  time: string;
+  event: string;
+  repeating: string;
+  position: string;
+  prior: string;
+}
+
+const { TabPane } = Tabs;
 
 const sortPrior = (a: string, b: string) => {
   let aPrior: number = 0;
@@ -25,10 +36,14 @@ const sortPrior = (a: string, b: string) => {
   aPrior = getPrior(a);
   bPrior = getPrior(b);
 
-  return aPrior - bPrior;
+  return bPrior - aPrior;
 };
 
 const EventList: FunctionComponent<AppProps> = ({ store }) => {
+  const eventData = store.events.map((i) => {
+    return { ...i, repeating: i.repeating ? 'да' : 'нет' };
+  });
+
   const columns = [
     {
       title: 'Событие',
@@ -38,23 +53,17 @@ const EventList: FunctionComponent<AppProps> = ({ store }) => {
       sorter: (a: eventT, b: eventT) => (a.event > b.event ? 1 : -1),
     },
     {
-      title: 'Дата',
-      dataIndex: 'date',
-      key: 'date',
-      width: '20%',
-      sorter: (a: eventT, b: eventT) => {
-        const aDate = a.date.split('.').reverse().join('-');
-        const bDate = b.date.split('.').reverse().join('-');
-
-        return new Date(aDate) < new Date(bDate) ? 1 : -1;
-      },
-    },
-    {
       title: 'Время',
       dataIndex: 'time',
       key: 'time',
       width: '20%',
       sorter: (a: eventT, b: eventT) => (a.time < b.time ? 1 : -1),
+    },
+    {
+      title: 'Повтор',
+      dataIndex: 'repeating',
+      key: 'repeating',
+      width: '20%',
     },
     {
       title: 'Приоритет',
@@ -64,8 +73,8 @@ const EventList: FunctionComponent<AppProps> = ({ store }) => {
       sorter: (a: eventT, b: eventT) => sortPrior(a.prior, b.prior),
     },
   ];
-  debugger;
-  return <Table columns={columns} dataSource={store.events} />;
+
+  return <Table columns={columns} dataSource={eventData} />;
 };
 
 export default observer(EventList);
