@@ -3,9 +3,10 @@ import { observable, computed, configure, action } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 
-let dateTime: Date = new Date(2020, 10, 12, 12, 30);
-
-
+type month = {
+    year: number,
+    month: number
+}
 
 class Store {
     events: eventT[] = [
@@ -42,26 +43,91 @@ class Store {
             position: 'left',
             prior: 'низкий',
         },
+        {
+            key: '4',
+            day: 23,
+            month: 11,
+            year: 2019,
+            time: '19:31',
+            event: 'событие44',
+            repeating: false,
+            position: 'left',
+            prior: 'низкий',
+        },
+        {
+            key: '5',
+            day: 22,
+            month: 1,
+            year: 2019,
+            time: '12:31',
+            event: 'событие5',
+            repeating: false,
+            position: 'left',
+            prior: 'низкий',
+        },
     ]
 
-    sortType: string = 'day'
-
-    func = (events: eventT[]): dataItem[] => {
-
+    sort = (events: eventT[]): dataItem[] => {
         let myDay = events.map((i) => i.day)
-        let arr = Array.from(new Set(myDay));
 
-        let a = arr.map((i) => {
+        return Array.from(new Set(myDay)).map((i) => {
             return {
-                day: i,
+                title: i.toString(),
                 event: events.filter((v) => v.day === i)
             }
         })
-        console.log(a)
-        return a;
     }
 
-    @observable eventData: dataItem[] = this.func(this.events);
+    sortM = (events: eventT[]): dataItem[] => {
+
+        let arr = events.map((i) => ({ year: i.year, month: i.month }))
+        let monthArr: month[] = []
+
+        arr.forEach((i) => {
+            if (monthArr.some((j) => JSON.stringify(i) === JSON.stringify(j))) {
+                return null
+            }
+            return monthArr.push(i)
+        })
+
+        const sortM = (a: month, b: month) => {
+            if (a.year === b.year) return b.month - a.month
+            return b.year - a.year
+        }
+
+        return monthArr.sort(sortM).map((i) => {
+            let title = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
+            return {
+                title: `${title}.${i.year}`,
+                event: events.filter((v) => v.year === i.year && v.month === i.month)
+            }
+        })
+    }
+
+    sortY = (events: eventT[]): dataItem[] => {
+        let yearArr = events.map((i) => i.year)
+
+        return Array.from(new Set(yearArr)).sort().reverse().map((i) => {
+            return {
+                title: i.toString(),
+                event: events.filter((v) => v.year === i)
+            }
+        })
+    }
+
+    @action setTypeDay = () => {
+        console.log('day')
+    }
+    @action setTypeMonth = () => {
+        this.eventData = this.sortM(this.events);
+    }
+
+    @action setTypeYear = () => {
+        this.eventData = this.sortY(this.events);
+    }
+
+
+    @observable eventData: dataItem[] = this.sort(this.events);
 
 
 }

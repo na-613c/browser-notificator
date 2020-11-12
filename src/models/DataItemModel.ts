@@ -1,6 +1,6 @@
 import eventT from './EventModel'
 
 export default interface dataItem {
-    day: number;
+    title: string;
     event: eventT[];
 }

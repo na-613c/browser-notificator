@@ -11,7 +11,16 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   return (
     <div className="card-container">
       <h2>Выберите тип отображения</h2>
-      <Tabs defaultActiveKey="1">
+      <Tabs defaultActiveKey="1" onChange={(activeKey)=>{
+        switch (activeKey) {
+          case '1':
+            return store.setTypeDay();
+          case '2':
+            return store.setTypeMonth();
+          default:
+            return store.setTypeYear();
+        }
+      }}>
         <TabPane tab="День" key="1">
           <DateTab store={store} />
         </TabPane>
