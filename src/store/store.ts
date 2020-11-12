@@ -1,4 +1,4 @@
-import { observable, computed, configure, action } from 'mobx';
+import { observable, computed, configure, action, makeAutoObservable } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 
@@ -79,7 +79,12 @@ const getYear = (events: eventT[]): dataItem[] => {
 }
 
 class Store {
-    @observable events: eventT[] = [
+
+    constructor() {
+        makeAutoObservable(this)
+    }
+
+    events: eventT[] = [
         {
             key: '1',
             day: 4,
@@ -137,20 +142,20 @@ class Store {
         },
     ]
 
-    @observable eventData: dataItem[] = getDay(this.events);
+    eventData: dataItem[] = getDay(this.events);
 
-    @observable isEditMode: boolean = true;
+    isEditMode: boolean = true;
 
-    @action setEditMode = () => {
+    setEditMode = () => {
         this.isEditMode = !this.isEditMode
         console.log(this.isEditMode)
     };
 
-    @action setTabDay = () => this.eventData = getDay(this.events);
+    setTabDay = () => this.eventData = getDay(this.events);
 
-    @action setTabMonth = () => this.eventData = getMonth(this.events);
+    setTabMonth = () => this.eventData = getMonth(this.events);
 
-    @action setTabYear = () => this.eventData = getYear(this.events);
+    setTabYear = () => this.eventData = getYear(this.events);
 }
 
 export default new Store();

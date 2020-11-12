@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, Component } from 'react';
 import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs } from 'antd';
@@ -10,38 +10,50 @@ const { TabPane } = Tabs;
 
 type Props = { store: StoreT };
 
-const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
+class DisplayTypeTab extends React.Component<Props> {
+  
+  componentDidMount() {
+    console.log(this.props.store.isEditMode ? 'editMode ' : 'noEditMode ');
+  }
 
-  return (
-    <div className="card-container">
-      <Title level={2}>Выберите тип отображения</Title>
+  componentDidUpdate() {
+    console.log(this.props.store.isEditMode ? 'editMode ' : 'noEditMode ');
+  }
 
-      {store.isEditMode ? 'editMode ' : 'noEditMode '}
 
-      <Tabs
-        defaultActiveKey="1"
-        onChange={(activeKey) => {
-          switch (activeKey) {
-            case '1':
-              return store.setTabDay();
-            case '2':
-              return store.setTabMonth();
-            default:
-              return store.setTabYear();
-          }
-        }}>
-        <TabPane tab="День" key="1">
-          <DateTab store={store} />
-        </TabPane>
-        <TabPane tab="Месяц" key="2">
-          <DateTab store={store} />
-        </TabPane>
-        <TabPane tab="Год" key="3">
-          <DateTab store={store} />
-        </TabPane>
-      </Tabs>
-    </div>
-  );
-};
+
+  render() {
+    return (
+      <div className="card-container">
+        <Title level={2}>Выберите тип отображения</Title>
+
+        {this.props.store.isEditMode ? 'editMode ' : 'noEditMode '}
+
+        <Tabs
+          defaultActiveKey="1"
+          onChange={(activeKey) => {
+            switch (activeKey) {
+              case '1':
+                return this.props.store.setTabDay();
+              case '2':
+                return this.props.store.setTabMonth();
+              default:
+                return this.props.store.setTabYear();
+            }
+          }}>
+          <TabPane tab="День" key="1">
+            <DateTab store={this.props.store} />
+          </TabPane>
+          <TabPane tab="Месяц" key="2">
+            <DateTab store={this.props.store} />
+          </TabPane>
+          <TabPane tab="Год" key="3">
+            <DateTab store={this.props.store} />
+          </TabPane>
+        </Tabs>
+      </div>
+    );
+  }
+}
 
 export default observer(DisplayTypeTab);

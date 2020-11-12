@@ -5,6 +5,7 @@ import './App.css';
 import StoreT from './models/StoreModel';
 import { Typography } from 'antd';
 
+
 const { Title } = Typography;
 
 type AppProps = { store: StoreT };
