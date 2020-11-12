@@ -1,25 +1,25 @@
 import React, { FunctionComponent } from 'react';
-import { Tabs } from 'antd';
-import EventList from './EvenList/EventList';
+import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
+import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
-type AppProps = { store: StoreT };
+type Props = { store: StoreT };
 
-const DisplayTypeTab: FunctionComponent<AppProps> = ({ store }) => {
+const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   return (
     <div className="card-container">
       <h2>Выберите тип отображения</h2>
       <Tabs defaultActiveKey="1">
         <TabPane tab="День" key="1">
-          <EventList store={store} />
+          <DateTab store={store} />
         </TabPane>
         <TabPane tab="Месяц" key="2">
-          <EventList store={store} />
+          <DateTab store={store} />
         </TabPane>
         <TabPane tab="Год" key="3">
-          <EventList store={store} />
+          <DateTab store={store} />
         </TabPane>
       </Tabs>
     </div>

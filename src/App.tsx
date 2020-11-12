@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import DisplayTypeTab from './components/displayTypeTab/DisplayTypeTab';
+import DisplayTypeTab from './components/DisplayTypeTab/DisplayTypeTab';
 import './App.css';
 import StoreT from './models/StoreModel';
 

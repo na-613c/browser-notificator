@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { Table, Tabs } from 'antd';
+import { Table } from 'antd';
 import { observer } from 'mobx-react';
-import StoreT from '../../../models/StoreModel';
+import EventModel from '../../../../models/EventModel';
 
-type AppProps = { store: StoreT };
-interface eventT {
+type Props = { store: EventModel[] };
+
+type eventT = {
   key: string;
   day: number;
   month: number;
@@ -14,9 +15,7 @@ interface eventT {
   repeating: string;
   position: string;
   prior: string;
-}
-
-const { TabPane } = Tabs;
+};
 
 const sortPrior = (a: string, b: string) => {
   let aPrior: number = 0;
@@ -39,8 +38,8 @@ const sortPrior = (a: string, b: string) => {
   return bPrior - aPrior;
 };
 
-const EventList: FunctionComponent<AppProps> = ({ store }) => {
-  const eventData = store.events.map((i) => {
+const EventList: FunctionComponent<Props> = ({ store }) => {
+  const eventData = store.map((i) => {
     return { ...i, repeating: i.repeating ? 'да' : 'нет' };
   });
 
