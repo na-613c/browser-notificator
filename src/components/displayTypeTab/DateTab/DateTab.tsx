@@ -8,8 +8,6 @@ const { TabPane } = Tabs;
 type Props = { store: StoreT };
 
 const DateTab: FunctionComponent<Props> = ({ store }) => {
-
-  // ${e.event[0].day}.${e.event[0].month}.${e.event[0].year}
   const dateTab = store.eventData.map((e, id) => {
     return (
       <TabPane tab={e.title} key={id}>

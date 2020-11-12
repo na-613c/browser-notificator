@@ -3,6 +3,7 @@ import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs } from 'antd';
 import { Typography } from 'antd';
+import { observer } from 'mobx-react';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -10,10 +11,13 @@ const { TabPane } = Tabs;
 type Props = { store: StoreT };
 
 const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
+
   return (
     <div className="card-container">
-      <Title>browser notificator</Title>
-      <Title level={2}>Выберите тип отображения</Title>{' '}
+      <Title level={2}>Выберите тип отображения</Title>
+
+      {store.isEditMode ? 'editMode ' : 'noEditMode '}
+
       <Tabs
         defaultActiveKey="1"
         onChange={(activeKey) => {
@@ -40,4 +44,4 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   );
 };
 
-export default DisplayTypeTab;
+export default observer(DisplayTypeTab);

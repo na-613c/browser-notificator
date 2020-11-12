@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Table } from 'antd';
-import { observer } from 'mobx-react';
 import EventModel from '../../../../models/EventModel';
 
 type Props = { store: EventModel[] };
@@ -17,11 +16,7 @@ type eventT = {
   prior: string;
 };
 
-const sortPrior = (a: string, b: string) => {
-  let aPrior: number = 0;
-  let bPrior: number = 0;
-
-  let getPrior = (element: string) => {
+const getPrior = (element: string) => {
     switch (element) {
       case 'высокий':
         return 3;
@@ -30,12 +25,6 @@ const sortPrior = (a: string, b: string) => {
       default:
         return 1;
     }
-  };
-
-  aPrior = getPrior(a);
-  bPrior = getPrior(b);
-
-  return bPrior - aPrior;
 };
 
 const EventList: FunctionComponent<Props> = ({ store }) => {
@@ -69,11 +58,11 @@ const EventList: FunctionComponent<Props> = ({ store }) => {
       dataIndex: 'prior',
       key: 'prior',
       width: '20%',
-      sorter: (a: eventT, b: eventT) => sortPrior(a.prior, b.prior),
+      sorter: (a: eventT, b: eventT) => getPrior(b.prior) - getPrior(a.prior),
     },
   ];
 
   return <Table columns={columns} dataSource={eventData} />;
 };
 
-export default observer(EventList);
+export default EventList;
