@@ -3,9 +3,15 @@ import { observable, computed, configure, action } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 
-type month = {
+type monthType = {
     year: number,
     month: number
+}
+
+type dayType = {
+    year: number,
+    month: number,
+    day: number
 }
 
 class Store {
@@ -34,7 +40,7 @@ class Store {
         },
         {
             key: '3',
-            day: 11,
+            day: 12,
             month: 10,
             year: 2019,
             time: '19:31',
@@ -67,21 +73,38 @@ class Store {
         },
     ]
 
-    sort = (events: eventT[]): dataItem[] => {
-        let myDay = events.map((i) => i.day)
+    getDay = (events: eventT[]): dataItem[] => {
+        let arr = events.map((i) => ({ year: i.year, month: i.month, day: i.day }))
+        let dayArr: dayType[] = []
 
-        return Array.from(new Set(myDay)).map((i) => {
+        arr.forEach((i) => {
+            if (dayArr.some((j) => JSON.stringify(i) === JSON.stringify(j))) {
+                return null
+            }
+            return dayArr.push(i)
+        })
+
+        const sortDay = (a: dayType, b: dayType) => {
+            if (a.year === b.year && a.month === b.month) return b.day - a.day
+            if (a.year === b.year) return b.month - a.month
+            return b.year - a.year
+        }
+
+        return dayArr.sort(sortDay).map((i) => {
+            let monthString = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
+            let dayString = i.day.toString().length === 1 ? 0 + i.day.toString() : i.day;
+
             return {
-                title: i.toString(),
-                event: events.filter((v) => v.day === i)
+                title: `${dayString}.${monthString}.${i.year}`,
+                event: events.filter((v) => v.year === i.year && v.month === i.month && v.day === i.day)
             }
         })
     }
 
-    sortM = (events: eventT[]): dataItem[] => {
+    getMonth = (events: eventT[]): dataItem[] => {
 
         let arr = events.map((i) => ({ year: i.year, month: i.month }))
-        let monthArr: month[] = []
+        let monthArr: monthType[] = []
 
         arr.forEach((i) => {
             if (monthArr.some((j) => JSON.stringify(i) === JSON.stringify(j))) {
@@ -90,21 +113,21 @@ class Store {
             return monthArr.push(i)
         })
 
-        const sortM = (a: month, b: month) => {
+        const sortMonth = (a: monthType, b: monthType) => {
             if (a.year === b.year) return b.month - a.month
             return b.year - a.year
         }
 
-        return monthArr.sort(sortM).map((i) => {
-            let title = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
+        return monthArr.sort(sortMonth).map((i) => {
+            let monthString = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
             return {
-                title: `${title}.${i.year}`,
+                title: `${monthString}.${i.year}`,
                 event: events.filter((v) => v.year === i.year && v.month === i.month)
             }
         })
     }
 
-    sortY = (events: eventT[]): dataItem[] => {
+    getYear = (events: eventT[]): dataItem[] => {
         let yearArr = events.map((i) => i.year)
 
         return Array.from(new Set(yearArr)).sort().reverse().map((i) => {
@@ -115,20 +138,19 @@ class Store {
         })
     }
 
-    @action setTypeDay = () => {
-        console.log('day')
-    }
-    @action setTypeMonth = () => {
-        this.eventData = this.sortM(this.events);
+    @action setTabDay = () => {
+        this.eventData = this.getDay(this.events);
     }
 
-    @action setTypeYear = () => {
-        this.eventData = this.sortY(this.events);
+    @action setTabMonth = () => {
+        this.eventData = this.getMonth(this.events);
     }
 
+    @action setTabYear = () => {
+        this.eventData = this.getYear(this.events);
+    }
 
-    @observable eventData: dataItem[] = this.sort(this.events);
-
+    @observable eventData: dataItem[] = this.getDay(this.events);
 
 }
 

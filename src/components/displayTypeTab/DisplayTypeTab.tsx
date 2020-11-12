@@ -2,7 +2,9 @@ import React, { FunctionComponent } from 'react';
 import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs } from 'antd';
+import { Typography } from 'antd';
 
+const { Title } = Typography;
 const { TabPane } = Tabs;
 
 type Props = { store: StoreT };
@@ -10,17 +12,20 @@ type Props = { store: StoreT };
 const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   return (
     <div className="card-container">
-      <h2>Выберите тип отображения</h2>
-      <Tabs defaultActiveKey="1" onChange={(activeKey)=>{
-        switch (activeKey) {
-          case '1':
-            return store.setTypeDay();
-          case '2':
-            return store.setTypeMonth();
-          default:
-            return store.setTypeYear();
-        }
-      }}>
+      <Title>browser notificator</Title>
+      <Title level={2}>Выберите тип отображения</Title>{' '}
+      <Tabs
+        defaultActiveKey="1"
+        onChange={(activeKey) => {
+          switch (activeKey) {
+            case '1':
+              return store.setTabDay();
+            case '2':
+              return store.setTabMonth();
+            default:
+              return store.setTabYear();
+          }
+        }}>
         <TabPane tab="День" key="1">
           <DateTab store={store} />
         </TabPane>
