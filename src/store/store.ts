@@ -146,10 +146,11 @@ class Store {
 
     isEditMode: boolean = true;
 
-    setEditMode = () => {
-        this.isEditMode = !this.isEditMode
-        console.log(this.isEditMode)
-    };
+    isShowModal: boolean = false;
+
+    setEditMode = () => this.isEditMode = !this.isEditMode;
+
+    setModal = () => this.isShowModal = !this.isShowModal;
 
     setTabDay = () => this.eventData = getDay(this.events);
 

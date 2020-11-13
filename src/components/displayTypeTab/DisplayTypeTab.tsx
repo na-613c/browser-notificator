@@ -12,15 +12,6 @@ type Props = { store: StoreT };
 
 class DisplayTypeTab extends React.Component<Props> {
   
-  componentDidMount() {
-    console.log(this.props.store.isEditMode ? 'editMode ' : 'noEditMode ');
-  }
-
-  componentDidUpdate() {
-    console.log(this.props.store.isEditMode ? 'editMode ' : 'noEditMode ');
-  }
-
-
 
   render() {
     return (
