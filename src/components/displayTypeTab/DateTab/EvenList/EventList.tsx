@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import { Table } from 'antd';
+import React, { FunctionComponent, useState } from 'react';
+import { Table, Radio, Divider, Popconfirm } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import { observer } from 'mobx-react';
 
-type Props = { store: EventModel[] };
+type Props = { store: EventModel[]; isEditMode: boolean };
 
 type eventT = {
   key: string;
@@ -28,7 +28,7 @@ const getPrior = (element: string) => {
   }
 };
 
-const EventList: FunctionComponent<Props> = ({ store }) => {
+const EventList: FunctionComponent<Props> = ({ store, isEditMode }) => {
   const eventData = store.map((i) => {
     return { ...i, repeating: i.repeating ? 'да' : 'нет' };
   });
@@ -60,6 +60,26 @@ const EventList: FunctionComponent<Props> = ({ store }) => {
       key: 'prior',
       width: '20%',
       sorter: (a: eventT, b: eventT) => getPrior(b.prior) - getPrior(a.prior),
+    },
+    {
+      title: !!isEditMode && 'operation',
+      dataIndex: 'operation',
+      render: (_: any, row: eventT) => {
+        return (
+          !!isEditMode && (
+            <span>
+              <a onClick={() => console.log('save ' + row.event)} style={{ marginRight: 8 }}>
+                Изменить
+              </a>
+              <Popconfirm
+                title="Действительно удалить?"
+                onConfirm={() => console.log('cancel' + row.event)}>
+                <a>Удалить</a>
+              </Popconfirm>
+            </span>
+          )
+        );
+      },
     },
   ];
 
