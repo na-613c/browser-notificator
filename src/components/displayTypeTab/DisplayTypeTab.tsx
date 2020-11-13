@@ -17,9 +17,6 @@ class DisplayTypeTab extends React.Component<Props> {
     return (
       <div className="card-container">
         <Title level={2}>Выберите тип отображения</Title>
-
-        {this.props.store.isEditMode ? 'editMode ' : 'noEditMode '}
-
         <Tabs
           defaultActiveKey="1"
           onChange={(activeKey) => {

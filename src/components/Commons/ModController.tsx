@@ -11,6 +11,7 @@ const ModController: FunctionComponent<Props> = ({ store }) => {
   return (
     <Row justify="center">
       <Col span={4}>
+        <p>Режим редактирования</p>
         <Switch defaultChecked onChange={() => store.setEditMode()} />
       </Col>
       <Col span={4}>

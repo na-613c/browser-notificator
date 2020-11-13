@@ -2,6 +2,10 @@ import { observable, computed, configure, action, makeAutoObservable } from 'mob
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 
+const day = "DAY"
+const month = "MONTH"
+const year = 'YEAR'
+
 type monthType = {
     year: number,
     month: number
@@ -83,7 +87,6 @@ class Store {
     constructor() {
         makeAutoObservable(this)
     }
-
     events: eventT[] = [
         {
             key: '1',
@@ -141,22 +144,63 @@ class Store {
             prior: 'низкий',
         },
     ]
-
     eventData: dataItem[] = getDay(this.events);
-
     isEditMode: boolean = true;
-
     isShowModal: boolean = false;
+    activeTab: string = day;
 
-    setEditMode = () => this.isEditMode = !this.isEditMode;
+    setEvent = (obj: any) => {
+        const date = new Date(obj['date-picker']);
 
-    setModal = () => this.isShowModal = !this.isShowModal;
+        const event: eventT = {
+            key: (this.events.length + 1).toString(),
+            day: date.getDate(),
+            month: date.getMonth() + 1,
+            year: date.getFullYear(),
+            time: obj['time-picker'],
+            event: obj.event,
+            repeating: !!obj.repeating,
+            position: obj.position,
+            prior: obj.prior,
+        }
 
-    setTabDay = () => this.eventData = getDay(this.events);
+        this.events.push(event);
+        
+        switch (this.activeTab) {
+            case (year):
+                this.setTabYear();
+                break;
+            case (month):
+                this.setTabMonth();
+                break;
+            default:
+                this.setTabDay();
+                break;
+        }
+    }
 
-    setTabMonth = () => this.eventData = getMonth(this.events);
+    setEditMode = () => {
+        this.isEditMode = !this.isEditMode
+    };
 
-    setTabYear = () => this.eventData = getYear(this.events);
+    setModal = () => {
+        this.isShowModal = !this.isShowModal
+    };
+
+    setTabDay = () => {
+        this.activeTab = day;
+        this.eventData = getDay(this.events)
+    };
+
+    setTabMonth = () => {
+        this.activeTab = month;
+        this.eventData = getMonth(this.events)
+    };
+
+    setTabYear = () => {
+        this.activeTab = year;
+        this.eventData = getYear(this.events)
+    };
 }
 
 export default new Store();

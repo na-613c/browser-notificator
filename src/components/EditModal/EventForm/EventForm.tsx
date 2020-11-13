@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Modal, Checkbox, DatePicker, TimePicker, Select, Input, Form, Button, Switch } from 'antd';
-import { observer } from 'mobx-react';
 import StoreT from '../../../models/StoreModel';
 import eventT from '../../../models/EventModel';
 
@@ -22,8 +21,8 @@ const EventForm: FunctionComponent<Props> = ({ store, form }) => {
       </Form.Item>
       <Form.Item label="position" name="position" hasFeedback>
         <Select style={{ width: 120 }}>
-          <Option value="лево">Лево</Option>
-          <Option value="право">Право</Option>
+          <Option value="left">Лево</Option>
+          <Option value="right">Право</Option>
         </Select>
       </Form.Item>
       <Form.Item label="prior" name="prior" hasFeedback>
@@ -36,10 +35,8 @@ const EventForm: FunctionComponent<Props> = ({ store, form }) => {
       <Form.Item label="event" name="event" hasFeedback>
         <Input placeholder="Basic usage" />
       </Form.Item>
-      <Form.Item>
-      </Form.Item>
     </Form>
   );
 };
 
-export default observer(EventForm);
+export default EventForm;

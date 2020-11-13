@@ -5,6 +5,7 @@ import EditModal from './components/EditModal/EditModal';
 import './App.css';
 import StoreT from './models/StoreModel';
 import { Typography } from 'antd';
+import { observer } from 'mobx-react';
 
 const { Title } = Typography;
 

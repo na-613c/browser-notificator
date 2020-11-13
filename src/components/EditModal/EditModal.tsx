@@ -12,7 +12,6 @@ const EditModal: FunctionComponent<Props> = ({ store }) => {
     <Modal
       title="Редактирование"
       visible={store.isShowModal}
-      // onOk={() => store.setModal()}
       onCancel={() => store.setModal()}
       okText="Create"
       cancelText="Cancel"
@@ -28,6 +27,7 @@ const EditModal: FunctionComponent<Props> = ({ store }) => {
               'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
             };
             console.log('Success:', value);
+            store.setEvent(value);
           })
           .then(() => store.setModal())
           .catch((info: any) => {

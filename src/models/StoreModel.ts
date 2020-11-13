@@ -6,6 +6,8 @@ export default interface StoreT {
     eventData: dataItem[];
     isEditMode: boolean;
     isShowModal: boolean;
+    activeTab: string;
+    setEvent: { (event: any): void };
     setModal: { (): void };
     setEditMode: { (): void };
     setTabDay: { (): void };

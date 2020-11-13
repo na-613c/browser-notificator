@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Table } from 'antd';
 import EventModel from '../../../../models/EventModel';
+import { observer } from 'mobx-react';
 
 type Props = { store: EventModel[] };
 
@@ -17,14 +18,14 @@ type eventT = {
 };
 
 const getPrior = (element: string) => {
-    switch (element) {
-      case 'высокий':
-        return 3;
-      case 'средний':
-        return 2;
-      default:
-        return 1;
-    }
+  switch (element) {
+    case 'высокий':
+      return 3;
+    case 'средний':
+      return 2;
+    default:
+      return 1;
+  }
 };
 
 const EventList: FunctionComponent<Props> = ({ store }) => {
@@ -65,4 +66,4 @@ const EventList: FunctionComponent<Props> = ({ store }) => {
   return <Table columns={columns} dataSource={eventData} />;
 };
 
-export default EventList;
+export default observer(EventList);
