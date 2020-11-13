@@ -13,8 +13,8 @@ const EditModal: FunctionComponent<Props> = ({ store }) => {
       title="Редактирование"
       visible={store.isShowModal}
       onCancel={() => store.setModal()}
-      okText="Create"
-      cancelText="Cancel"
+      okText="Добавить"
+      cancelText="Отмена"
       onOk={() => {
         form
           .validateFields()
@@ -26,10 +26,11 @@ const EditModal: FunctionComponent<Props> = ({ store }) => {
               'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
               'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
             };
-            console.log('Success:', value);
             store.setEvent(value);
+
+            console.log('Success:', value);
+            store.setModal();
           })
-          .then(() => store.setModal())
           .catch((info: any) => {
             console.log('Validate Failed:', info);
           });

@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Table, Radio, Divider, Popconfirm } from 'antd';
 import EventModel from '../../../../models/EventModel';
+import StoreT from '../../../../models/StoreModel';
 import { observer } from 'mobx-react';
 
-type Props = { store: EventModel[]; isEditMode: boolean };
+type Props = { event: EventModel[]; store: StoreT };
 
 type eventT = {
   key: string;
@@ -28,8 +29,8 @@ const getPrior = (element: string) => {
   }
 };
 
-const EventList: FunctionComponent<Props> = ({ store, isEditMode }) => {
-  const eventData = store.map((i) => {
+const EventList: FunctionComponent<Props> = ({ event, store }) => {
+  const eventData = event.map((i) => {
     return { ...i, repeating: i.repeating ? 'да' : 'нет' };
   });
 
@@ -62,18 +63,18 @@ const EventList: FunctionComponent<Props> = ({ store, isEditMode }) => {
       sorter: (a: eventT, b: eventT) => getPrior(b.prior) - getPrior(a.prior),
     },
     {
-      title: !!isEditMode && 'operation',
+      title: !!store.isEditMode && 'operation',
       dataIndex: 'operation',
       render: (_: any, row: eventT) => {
         return (
-          !!isEditMode && (
+          !!store.isEditMode && (
             <span>
               <a onClick={() => console.log('save ' + row.event)} style={{ marginRight: 8 }}>
                 Изменить
               </a>
               <Popconfirm
                 title="Действительно удалить?"
-                onConfirm={() => console.log('cancel' + row.event)}>
+                onConfirm={() => store.deleteEvent(row.key)}>
                 <a>Удалить</a>
               </Popconfirm>
             </span>

@@ -1,6 +1,7 @@
 import { observable, computed, configure, action, makeAutoObservable } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
+import initEvents from './InitEvents'
 
 const day = "DAY"
 const month = "MONTH"
@@ -87,63 +88,9 @@ class Store {
     constructor() {
         makeAutoObservable(this)
     }
-    events: eventT[] = [
-        {
-            key: '1',
-            day: 4,
-            month: 11,
-            year: 2020,
-            time: '10:30',
-            event: 'событие1',
-            repeating: true,
-            position: 'left',
-            prior: 'высокий',
-        },
-        {
-            key: '2',
-            day: 11,
-            month: 10,
-            year: 2019,
-            time: '09:31',
-            event: 'событие21',
-            repeating: false,
-            position: 'left',
-            prior: 'средний',
-        },
-        {
-            key: '3',
-            day: 12,
-            month: 10,
-            year: 2019,
-            time: '19:31',
-            event: 'событие333333',
-            repeating: false,
-            position: 'left',
-            prior: 'низкий',
-        },
-        {
-            key: '4',
-            day: 23,
-            month: 11,
-            year: 2019,
-            time: '19:31',
-            event: 'событие44',
-            repeating: false,
-            position: 'left',
-            prior: 'высокий',
-        },
-        {
-            key: '5',
-            day: 22,
-            month: 1,
-            year: 2019,
-            time: '12:31',
-            event: 'событие5',
-            repeating: false,
-            position: 'left',
-            prior: 'низкий',
-        },
-    ]
+
+    events: eventT[] = initEvents;
+
     eventData: dataItem[] = getDay(this.events);
     isEditMode: boolean = true;
     isShowModal: boolean = false;
@@ -151,9 +98,10 @@ class Store {
 
     setEvent = (obj: any) => {
         const date = new Date(obj['date-picker']);
+        const maxId = this.events.length - 1;
 
         const event: eventT = {
-            key: (this.events.length + 1).toString(),
+            key: (Number(this.events[maxId].key) + 1).toString(),
             day: date.getDate(),
             month: date.getMonth() + 1,
             year: date.getFullYear(),
@@ -164,8 +112,10 @@ class Store {
             prior: obj.prior,
         }
 
+
+
         this.events.push(event);
-        
+
         switch (this.activeTab) {
             case (year):
                 this.setTabYear();
@@ -175,6 +125,59 @@ class Store {
                 break;
             default:
                 this.setTabDay();
+                break;
+        }
+    }
+
+    updateEvent = (obj: any, key: string) => {
+
+        const date = new Date(obj['date-picker']);
+
+        const event: eventT = {
+            key: this.events.length.toString(),
+            day: date.getDate(),
+            month: date.getMonth() + 1,
+            year: date.getFullYear(),
+            time: obj['time-picker'],
+            event: obj.event,
+            repeating: !!obj.repeating,
+            position: obj.position,
+            prior: obj.prior,
+        }
+
+        this.events = this.events.map((a) => {
+            if (a.key === key) return event;
+            return a
+        })
+
+        switch (this.activeTab) {
+            case (year):
+                this.setTabYear();
+                break;
+            case (month):
+                this.setTabMonth();
+                break;
+            default:
+                this.setTabDay();
+                break;
+        }
+    }
+
+
+    deleteEvent = (key: string) => {
+        console.log(`key = ${key}`)
+
+        this.events = this.events.filter((a) => a.key !== key)
+
+        switch (this.activeTab) {
+            case (year):
+                this.eventData = getYear(this.events)
+                break;
+            case (month):
+                this.eventData = getMonth(this.events)
+                break;
+            default:
+                this.eventData = getDay(this.events)
                 break;
         }
     }

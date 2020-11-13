@@ -12,7 +12,7 @@ const DateTab: FunctionComponent<Props> = ({ store }) => {
   const dateTab = store.eventData.map((e, id) => {
     return (
       <TabPane tab={e.title} key={id}>
-        <EventList store={e.event} isEditMode={store.isEditMode}/>
+        <EventList event={e.event} store={store} />
       </TabPane>
     );
   });
