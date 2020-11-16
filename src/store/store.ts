@@ -98,10 +98,9 @@ class Store {
 
     setEvent = (obj: any) => {
         const date = new Date(obj['date-picker']);
-        const maxId = this.events.length - 1;
 
         const event: eventT = {
-            key: (Number(this.events[maxId].key) + 1).toString(),
+            key: (new Date().getTime()).toString(),
             day: date.getDate(),
             month: date.getMonth() + 1,
             year: date.getFullYear(),
@@ -134,7 +133,7 @@ class Store {
         const date = new Date(obj['date-picker']);
 
         const event: eventT = {
-            key: this.events.length.toString(),
+            key: key,
             day: date.getDate(),
             month: date.getMonth() + 1,
             year: date.getFullYear(),
