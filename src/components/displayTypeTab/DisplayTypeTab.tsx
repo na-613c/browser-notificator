@@ -1,47 +1,43 @@
-import React, { FunctionComponent, Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs } from 'antd';
 import { Typography } from 'antd';
 import { observer } from 'mobx-react';
-
+import { NavLink, Route } from 'react-router-dom';
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
 type Props = { store: StoreT };
 
-class DisplayTypeTab extends React.Component<Props> {
-  
-
-  render() {
-    return (
-      <div className="card-container">
-        <Title level={2}>Выберите тип отображения</Title>
-        <Tabs
-          defaultActiveKey="1"
-          onChange={(activeKey) => {
-            switch (activeKey) {
-              case '1':
-                return this.props.store.setTabDay();
-              case '2':
-                return this.props.store.setTabMonth();
-              default:
-                return this.props.store.setTabYear();
-            }
-          }}>
-          <TabPane tab="День" key="1">
-            <DateTab store={this.props.store} />
-          </TabPane>
-          <TabPane tab="Месяц" key="2">
-            <DateTab store={this.props.store} />
-          </TabPane>
-          <TabPane tab="Год" key="3">
-            <DateTab store={this.props.store} />
-          </TabPane>
-        </Tabs>
-      </div>
-    );
-  }
-}
+const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
+  return (
+    <div className="card-container">
+      <Title level={2}>Выберите тип отображения</Title>
+      <Tabs
+        defaultActiveKey="1"
+        onChange={(activeKey: string) => {
+          switch (activeKey) {
+            case '1':
+              return store.setTabDay();
+            case '2':
+              return store.setTabMonth();
+            default:
+              return store.setTabYear();
+          }
+        }}>
+        <TabPane tab={<NavLink to="/day">День</NavLink>} key="1">
+          <Route path="/day" component={() => <DateTab store={store} />}></Route>
+        </TabPane>
+        <TabPane tab={<NavLink to="/month">Месяц</NavLink>} key="2">
+          <Route path="/month" component={() => <DateTab store={store} />}></Route>
+        </TabPane>
+        <TabPane tab={<NavLink to="/year">Год</NavLink>} key="3">
+          <Route path="/year" component={() => <DateTab store={store} />}></Route>
+        </TabPane>
+      </Tabs>
+    </div>
+  );
+};
 
 export default observer(DisplayTypeTab);

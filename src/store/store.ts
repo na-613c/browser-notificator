@@ -1,4 +1,4 @@
-import { observable, computed, configure, action, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 import initEvents from './InitEvents'

@@ -5,20 +5,21 @@ import EditModal from './components/EditModal/EditModal';
 import './App.css';
 import StoreT from './models/StoreModel';
 import { Typography } from 'antd';
-import { observer } from 'mobx-react';
-
+import { BrowserRouter } from 'react-router-dom';
 const { Title } = Typography;
 
 type AppProps = { store: StoreT };
 
 const App: FunctionComponent<AppProps> = ({ store }) => {
   return (
-    <div className="App">
-      <Title>browser notificator</Title>
-      <ModController store={store} />
-      <DisplayTypeTab store={store} />
-      <EditModal store={store} />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Title>BROWSER NOTIFICATOR</Title>
+        <ModController store={store} />
+        <DisplayTypeTab store={store} />
+        <EditModal store={store} />
+      </div>
+    </BrowserRouter>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Table, Radio, Divider, Popconfirm } from 'antd';
+import React, { FunctionComponent } from 'react';
+import { Table, Popconfirm } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
 
@@ -64,7 +64,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       sorter: (a: eventT, b: eventT) => getPrior(b.prior) - getPrior(a.prior),
     },
     {
-      title: !!store.isEditMode && 'operation',
+      title: !!store.isEditMode && 'Действия',
       dataIndex: 'operation',
       render: (_: any, row: eventT) => {
         return (
