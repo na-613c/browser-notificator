@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { Table, Radio, Divider, Popconfirm } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
+
 import { observer } from 'mobx-react';
 
 type Props = { event: EventModel[]; store: StoreT };
@@ -69,11 +70,15 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
         return (
           !!store.isEditMode && (
             <span>
-              <a onClick={() => console.log('save ' + row.event)} style={{ marginRight: 8 }}>
+              <a
+                onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
+                style={{ marginRight: 8 }}>
                 Изменить
               </a>
               <Popconfirm
                 title="Действительно удалить?"
+                okText="Удалить"
+                cancelText="Отмена"
                 onConfirm={() => store.deleteEvent(row.key)}>
                 <a>Удалить</a>
               </Popconfirm>

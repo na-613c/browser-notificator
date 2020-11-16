@@ -16,7 +16,7 @@ const ModController: FunctionComponent<Props> = ({ store }) => {
       </Col>
       <Col span={4}>
         {store.isEditMode && (
-          <Button type="primary" onClick={() => store.setModal()}>
+          <Button type="primary" onClick={() => store.addModal()}>
             Добавить новое событие
           </Button>
         )}

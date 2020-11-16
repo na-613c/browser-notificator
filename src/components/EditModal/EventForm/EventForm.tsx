@@ -1,42 +1,14 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { Modal, Checkbox, DatePicker, TimePicker, Select, Input, Form, Button, Switch } from 'antd';
+import React, { FunctionComponent } from 'react';
 import StoreT from '../../../models/StoreModel';
-import eventT from '../../../models/EventModel';
+import AddForm from './AddForm/AddForm';
+import UpdForm from './UpdForm/UpdForm';
 
-type Props = { store: any; form: any };
-
-const { Option } = Select;
+type Props = { store: StoreT; form: any };
 
 const EventForm: FunctionComponent<Props> = ({ store, form }) => {
-  return (
-    <Form labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="horizontal" form={form}>
-      <Form.Item initialValue={false} label="Повтор" name="repeating" hasFeedback>
-        <Switch />
-      </Form.Item>
-      <Form.Item label="Время" name="time-picker" hasFeedback>
-        <TimePicker />
-      </Form.Item>
-      <Form.Item label="Дата" name="date-picker" hasFeedback>
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="Позиция" name="position" hasFeedback>
-        <Select style={{ width: 120 }}>
-          <Option value="left">Лево</Option>
-          <Option value="right">Право</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Приоритет" name="prior" hasFeedback>
-        <Select style={{ width: 120 }}>
-          <Option value="высокий">Высокий</Option>
-          <Option value="средний">Средний</Option>
-          <Option value="низкий">Низкий</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Событие" name="event" hasFeedback>
-        <Input placeholder="Описание события" />
-      </Form.Item>
-    </Form>
-  );
+  let isShow = store.showModal.isShowData;
+
+  return <>{isShow ? <UpdForm store={store} form={form} /> : <AddForm form={form} />}</>;
 };
 
 export default EventForm;

@@ -2,6 +2,7 @@ import { observable, computed, configure, action, makeAutoObservable } from 'mob
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 import initEvents from './InitEvents'
+import modalT from '../models/ModalModel'
 
 const day = "DAY"
 const month = "MONTH"
@@ -83,6 +84,18 @@ const getYear = (events: eventT[]): dataItem[] => {
     })
 }
 
+const initValue = {
+    key: '0',
+    day: 1,
+    month: 1,
+    year: 2000,
+    time: '00:00:00',
+    event: 'событие',
+    repeating: false,
+    position: 'left',
+    prior: 'высокий',
+}
+
 class Store {
 
     constructor() {
@@ -90,10 +103,9 @@ class Store {
     }
 
     events: eventT[] = initEvents;
-
     eventData: dataItem[] = getDay(this.events);
     isEditMode: boolean = true;
-    isShowModal: boolean = false;
+    showModal: modalT = { isShowModal: false, event: initValue };
     activeTab: string = day;
 
     setEvent = (obj: any) => {
@@ -164,7 +176,6 @@ class Store {
 
 
     deleteEvent = (key: string) => {
-        console.log(`key = ${key}`)
 
         this.events = this.events.filter((a) => a.key !== key)
 
@@ -186,8 +197,30 @@ class Store {
     };
 
     setModal = () => {
-        this.isShowModal = !this.isShowModal
+        this.showModal = {
+            ...this.showModal,
+            isShowData: false,
+            isShowModal: !this.showModal.isShowModal,
+        }
     };
+
+    addModal = () => {
+        this.showModal = {
+            ...this.showModal,
+            isShowData: false,
+            isShowModal: true,
+        }
+    }
+
+    updModal = (event: eventT) => {
+        this.showModal = {
+            event: event,
+            isShowData: true,
+            isShowModal: true,
+        }
+    }
+
+
 
     setTabDay = () => {
         this.activeTab = day;
