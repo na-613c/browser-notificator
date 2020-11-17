@@ -84,11 +84,11 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
     setEventData([...events]);
   };
 
-  const getColumnSearchProps = (dataIndex: string) => ({
+  const getColumnSearchProps = (dataIndex: string, title: string) => ({
     filterDropdown: () => (
       <div style={{ padding: 8 }}>
         <Input
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Искать ${title}`}
           value={state.searchText}
           onChange={(e) => setState({ searchText: e.target.value, searchedColumn: dataIndex })}
           onPressEnter={() => handleSearch()}
@@ -101,9 +101,11 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
             icon={<SearchOutlined />}
             size="small"
             style={{ width: 90 }}>
-            Search
+            Поиск
           </Button>
-          <Button onClick={() => handleClear()}>Reset</Button>
+          <Button size="small" onClick={() => handleClear()}>
+            Сбросить
+          </Button>
         </Space>
       </div>
     ),
@@ -120,7 +122,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       key: 'event',
       width: '30%',
       sorter: (a: any, b: any) => (a.event > b.event ? 1 : -1),
-      ...getColumnSearchProps('event'),
+      ...getColumnSearchProps('event', 'Событие'),
     },
     {
       title: 'Время',
@@ -128,14 +130,14 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       key: 'time',
       width: '20%',
       sorter: (a: any, b: any) => (a.time < b.time ? 1 : -1),
-      ...getColumnSearchProps('time'),
+      ...getColumnSearchProps('time', 'Время'),
     },
     {
       title: 'Повтор',
       dataIndex: 'repeating',
       key: 'repeating',
       width: '20%',
-      ...getColumnSearchProps('repeating'),
+      ...getColumnSearchProps('repeating', 'Повтор'),
     },
     {
       title: 'Приоритет',
@@ -143,7 +145,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       key: 'prior',
       width: '20%',
       sorter: (a: any, b: any) => getPrior(b.prior) - getPrior(a.prior),
-      ...getColumnSearchProps('prior'),
+      ...getColumnSearchProps('prior', 'Приоритет'),
     },
     {
       title: !!store.isEditMode && 'Действия',
