@@ -26,6 +26,9 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
         <TabPane tab={<NavLink to="/year">Год</NavLink>} key="3">
           <DateTab store={store} />
         </TabPane>
+        <TabPane tab={<NavLink to="/">Всё</NavLink>} key="4">
+          <DateTab store={store} />
+        </TabPane>
       </Tabs>
 
       <Switch>
@@ -48,6 +51,14 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
           component={() => {
             setstate('3');
             store.setTabYear();
+            return <></>;
+          }}></Route>
+        <Route
+          exact
+          path="/"
+          component={() => {
+            setstate('4');
+            store.setTabAll();
             return <></>;
           }}></Route>
       </Switch>

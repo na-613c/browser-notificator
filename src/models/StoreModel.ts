@@ -21,6 +21,7 @@ export default interface StoreT {
     
     setEditMode: { (): void };
 
+    setTabAll: { (): void };
     setTabDay: { (): void };
     setTabMonth: { (): void };
     setTabYear: { (): void };

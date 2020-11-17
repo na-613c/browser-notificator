@@ -123,21 +123,8 @@ class Store {
             prior: obj.prior,
         }
 
-
-
         this.events.push(event);
-
-        switch (this.activeTab) {
-            case (year):
-                this.setTabYear();
-                break;
-            case (month):
-                this.setTabMonth();
-                break;
-            default:
-                this.setTabDay();
-                break;
-        }
+        this._updateStore();
     }
 
     updateEvent = (obj: any, key: string) => {
@@ -154,42 +141,19 @@ class Store {
             repeating: !!obj.repeating,
             position: obj.position,
             prior: obj.prior,
-        }
+        };
 
         this.events = this.events.map((a) => {
             if (a.key === key) return event;
             return a
-        })
+        });
 
-        switch (this.activeTab) {
-            case (year):
-                this.setTabYear();
-                break;
-            case (month):
-                this.setTabMonth();
-                break;
-            default:
-                this.setTabDay();
-                break;
-        }
+        this._updateStore();
     }
 
-
     deleteEvent = (key: string) => {
-
-        this.events = this.events.filter((a) => a.key !== key)
-
-        switch (this.activeTab) {
-            case (year):
-                this.eventData = getYear(this.events)
-                break;
-            case (month):
-                this.eventData = getMonth(this.events)
-                break;
-            default:
-                this.eventData = getDay(this.events)
-                break;
-        }
+        this.events = this.events.filter((a) => a.key !== key);
+        this._updateStore();
     }
 
     setEditMode = () => {
@@ -220,7 +184,13 @@ class Store {
         }
     }
 
-
+    setTabAll = () => {
+        this.activeTab = '';
+        this.eventData = [{
+            title: 'Все уведомления',
+            event: [...this.events]
+        }];
+    };
 
     setTabDay = () => {
         this.activeTab = day;
@@ -236,6 +206,23 @@ class Store {
         this.activeTab = year;
         this.eventData = getYear(this.events)
     };
+
+    _updateStore = () => {
+        switch (this.activeTab) {
+            case (year):
+                this.setTabYear();
+                break;
+            case (month):
+                this.setTabMonth();
+                break;
+            case (day):
+                this.setTabDay();
+                break;
+            default:
+                this.setTabAll();
+                break;
+        }
+    }
 }
 
 export default new Store();
