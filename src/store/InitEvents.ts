@@ -25,7 +25,7 @@ export default [
         day: 11,
         month: 10,
         year: 2019,
-        time: '09:31',
+        time: '09:31:32',
         event: 'событие21',
         repeating: false,
         position: 'left',

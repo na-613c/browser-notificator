@@ -45,14 +45,14 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       prior: i.prior,
     };
   });
-  
+
   const [eventData, setEventData] = useState(events);
-  
+
   const [state, setState] = useState({
     searchText: '',
     searchedColumn: '',
   });
-  
+
   useEffect(() => {
     setEventData([...events]);
   }, [event]);
@@ -154,7 +154,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
             <span style={{ display: 'inline' }}>
               <Button
                 onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
-                type="primary"
+                type="dashed"
                 icon={<EditOutlined />}
                 size="large"
               />
@@ -163,7 +163,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
                 okText="Удалить"
                 cancelText="Отмена"
                 onConfirm={() => store.deleteEvent(row.key)}>
-                <Button type="primary" icon={<DeleteOutlined />} size="large" />
+                <Button danger type="dashed" icon={<DeleteOutlined />} size="large" />
               </Popconfirm>
             </span>
           )
