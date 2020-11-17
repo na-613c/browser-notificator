@@ -1,23 +1,24 @@
-import React, { FunctionComponent } from 'react';
-import { Table, Popconfirm } from 'antd';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import { Table, Popconfirm, Button, Input, Space } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
-
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 
 type Props = { event: EventModel[]; store: StoreT };
 
-type eventT = {
+interface eventT {
   key: string;
-  day: number;
-  month: number;
-  year: number;
+  day: string;
+  month: string;
+  year: string;
   time: string;
   event: string;
   repeating: string;
   position: string;
   prior: string;
-};
+}
 
 const getPrior = (element: string) => {
   switch (element) {
@@ -31,8 +32,85 @@ const getPrior = (element: string) => {
 };
 
 const EventList: FunctionComponent<Props> = ({ event, store }) => {
-  const eventData = event.map((i) => {
-    return { ...i, repeating: i.repeating ? 'да' : 'нет' };
+  let events: eventT[] = event.map((i) => {
+    return {
+      key: i.key,
+      day: i.day.toString(),
+      month: i.month.toString(),
+      year: i.year.toString(),
+      time: i.time,
+      event: i.event,
+      repeating: i.repeating ? 'да' : 'нет',
+      position: i.position,
+      prior: i.prior,
+    };
+  });
+  
+  const [eventData, setEventData] = useState(events);
+  
+  const [state, setState] = useState({
+    searchText: '',
+    searchedColumn: '',
+  });
+  
+  useEffect(() => {
+    setEventData([...events]);
+  }, [event]);
+
+  const handleSearch = () => {
+    switch (state.searchedColumn) {
+      case 'event':
+        setEventData(events.filter((e) => e.event === state.searchText));
+        console.log(eventData);
+        break;
+      case 'time':
+        setEventData(events.filter((e) => e.time === state.searchText));
+        break;
+      case 'repeating':
+        setEventData(events.filter((e) => e.repeating === state.searchText));
+        break;
+      case 'prior':
+        setEventData(events.filter((e) => e.prior === state.searchText));
+        break;
+      default:
+        setEventData([...events]);
+    }
+
+    if (state.searchText === '') setEventData([...events]);
+  };
+
+  const handleClear = () => {
+    setState({ searchText: '', searchedColumn: '' });
+    setEventData([...events]);
+  };
+
+  const getColumnSearchProps = (dataIndex: string) => ({
+    filterDropdown: () => (
+      <div style={{ padding: 8 }}>
+        <Input
+          placeholder={`Search ${dataIndex}`}
+          value={state.searchText}
+          onChange={(e) => setState({ searchText: e.target.value, searchedColumn: dataIndex })}
+          onPressEnter={() => handleSearch()}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch()}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}>
+            Search
+          </Button>
+          <Button onClick={() => handleClear()}>Reset</Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    render: (text: string) => text,
   });
 
   const columns = [
@@ -40,47 +118,52 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       title: 'Событие',
       dataIndex: 'event',
       key: 'event',
-      width: '40%',
-      sorter: (a: eventT, b: eventT) => (a.event > b.event ? 1 : -1),
+      width: '30%',
+      sorter: (a: any, b: any) => (a.event > b.event ? 1 : -1),
+      ...getColumnSearchProps('event'),
     },
     {
       title: 'Время',
       dataIndex: 'time',
       key: 'time',
       width: '20%',
-      sorter: (a: eventT, b: eventT) => (a.time < b.time ? 1 : -1),
+      sorter: (a: any, b: any) => (a.time < b.time ? 1 : -1),
+      ...getColumnSearchProps('time'),
     },
     {
       title: 'Повтор',
       dataIndex: 'repeating',
       key: 'repeating',
       width: '20%',
+      ...getColumnSearchProps('repeating'),
     },
     {
       title: 'Приоритет',
       dataIndex: 'prior',
       key: 'prior',
       width: '20%',
-      sorter: (a: eventT, b: eventT) => getPrior(b.prior) - getPrior(a.prior),
+      sorter: (a: any, b: any) => getPrior(b.prior) - getPrior(a.prior),
+      ...getColumnSearchProps('prior'),
     },
     {
       title: !!store.isEditMode && 'Действия',
       dataIndex: 'operation',
-      render: (_: any, row: eventT) => {
+      render: (_: any, row: any) => {
         return (
           !!store.isEditMode && (
-            <span>
-              <a
+            <span style={{ display: 'inline' }}>
+              <Button
                 onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
-                style={{ marginRight: 8 }}>
-                Изменить
-              </a>
+                type="primary"
+                icon={<EditOutlined />}
+                size="large"
+              />
               <Popconfirm
                 title="Действительно удалить?"
                 okText="Удалить"
                 cancelText="Отмена"
                 onConfirm={() => store.deleteEvent(row.key)}>
-                <a>Удалить</a>
+                <Button type="primary" icon={<DeleteOutlined />} size="large" />
               </Popconfirm>
             </span>
           )

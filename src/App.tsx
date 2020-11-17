@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import DisplayTypeTab from './components/DisplayTypeTab/DisplayTypeTab';
 import ModController from './components/Commons/ModController';
 import EditModal from './components/EditModal/EditModal';
 import './App.css';
 import StoreT from './models/StoreModel';
 import { Typography } from 'antd';
-import { BrowserRouter } from 'react-router-dom';
+
 const { Title } = Typography;
 
 type AppProps = { store: StoreT };

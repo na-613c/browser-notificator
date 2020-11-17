@@ -18,13 +18,13 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
       <Title level={2}>Выберите тип отображения</Title>
       <Tabs activeKey={state}>
         <TabPane tab={<NavLink to="/day">День</NavLink>} key="1">
-          <DateTab store={store} />;
+          <DateTab store={store} />
         </TabPane>
         <TabPane tab={<NavLink to="/month">Месяц</NavLink>} key="2">
-          <DateTab store={store} />;
+          <DateTab store={store} />
         </TabPane>
         <TabPane tab={<NavLink to="/year">Год</NavLink>} key="3">
-          <DateTab store={store} />;
+          <DateTab store={store} />
         </TabPane>
       </Tabs>
 
