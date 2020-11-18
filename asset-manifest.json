@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/browser-notificator/static/css/main.c1535e7d.chunk.css",
+    "main.js": "/browser-notificator/static/js/main.20c23144.chunk.js",
+    "main.js.map": "/browser-notificator/static/js/main.20c23144.chunk.js.map",
+    "runtime-main.js": "/browser-notificator/static/js/runtime-main.dfb60c91.js",
+    "runtime-main.js.map": "/browser-notificator/static/js/runtime-main.dfb60c91.js.map",
+    "static/css/2.f39a47ab.chunk.css": "/browser-notificator/static/css/2.f39a47ab.chunk.css",
+    "static/js/2.a96138f0.chunk.js": "/browser-notificator/static/js/2.a96138f0.chunk.js",
+    "static/js/2.a96138f0.chunk.js.map": "/browser-notificator/static/js/2.a96138f0.chunk.js.map",
+    "static/js/3.a49eaf4d.chunk.js": "/browser-notificator/static/js/3.a49eaf4d.chunk.js",
+    "static/js/3.a49eaf4d.chunk.js.map": "/browser-notificator/static/js/3.a49eaf4d.chunk.js.map",
+    "index.html": "/browser-notificator/index.html",
+    "static/css/2.f39a47ab.chunk.css.map": "/browser-notificator/static/css/2.f39a47ab.chunk.css.map",
+    "static/css/main.c1535e7d.chunk.css.map": "/browser-notificator/static/css/main.c1535e7d.chunk.css.map",
+    "static/js/2.a96138f0.chunk.js.LICENSE.txt": "/browser-notificator/static/js/2.a96138f0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dfb60c91.js",
+    "static/css/2.f39a47ab.chunk.css",
+    "static/js/2.a96138f0.chunk.js",
+    "static/css/main.c1535e7d.chunk.css",
+    "static/js/main.20c23144.chunk.js"
+  ]
+}
