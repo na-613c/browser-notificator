@@ -47,7 +47,6 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
   });
 
   const [eventData, setEventData] = useState(events);
-
   const [state, setState] = useState({
     searchText: '',
     searchedColumn: '',
@@ -152,7 +151,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       dataIndex: 'operation',
       render: (_: any, row: any) => {
         return (
-          !!store.isEditMode && (
+          !!store.isEditMode &&  (
             <span style={{ display: 'inline' }}>
               <Button
                 onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
@@ -174,7 +173,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={eventData} />;
+  return <Table columns={columns} loading={store.loading} dataSource={eventData} />;
 };
 
 export default observer(EventList);

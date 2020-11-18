@@ -22,8 +22,6 @@ type dayType = {
     day: number
 }
 
-// localStorage.setItem('browser_notificator', JSON.stringify(initEvents))  
-
 const getDay = (events: eventT[]): dataItem[] => {
     let arr = events.map((i) => ({ year: i.year, month: i.month, day: i.day }))
     let dayArr: dayType[] = []
@@ -108,11 +106,12 @@ class Store {
         makeAutoObservable(this)
     }
 
-    events: eventT[] = initEvents;
+    events: eventT[] = [];
     eventData: dataItem[] = getDay(this.events);
     isEditMode: boolean = true;
     showModal: modalT = { isShowModal: false, event: initValue };
     activeTab: string = day;
+    loading: boolean = true;
 
     getEvents = async () => {
         const data = await eventsAPI.getData()
@@ -121,7 +120,7 @@ class Store {
             this.events = (JSON.parse(data))
             this._updateStore()
         }
-
+        this.loading = false;
     }
 
 
@@ -226,7 +225,6 @@ class Store {
 
     _updateStore = () => {
         eventsAPI.setData(this.events);
-
         switch (this.activeTab) {
             case (year):
                 this.setTabYear();
