@@ -3,7 +3,6 @@ import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs } from 'antd';
 import { Typography } from 'antd';
-import { observer } from 'mobx-react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -38,21 +37,21 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
             setstate('1');
             store.setTabDay();
             return <></>;
-          }}></Route>
+          }}/>
         <Route
           path="/month"
           component={() => {
             setstate('2');
             store.setTabMonth();
             return <></>;
-          }}></Route>
+          }}/>
         <Route
           path="/year"
           component={() => {
             setstate('3');
             store.setTabYear();
             return <></>;
-          }}></Route>
+          }}/>
         <Route
           exact
           path="/"
@@ -60,10 +59,10 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
             setstate('4');
             store.setTabAll();
             return <></>;
-          }}></Route>
+          }}/>
       </Switch>
     </div>
   );
 };
 
-export default observer(DisplayTypeTab);
+export default DisplayTypeTab;

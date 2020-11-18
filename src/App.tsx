@@ -12,6 +12,7 @@ const { Title } = Typography;
 type AppProps = { store: StoreT };
 
 const App: FunctionComponent<AppProps> = ({ store }) => {
+  store.getEvents();
   return (
     <BrowserRouter>
       <div className="App">

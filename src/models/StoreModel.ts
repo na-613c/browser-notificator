@@ -10,6 +10,7 @@ export default interface StoreT {
     isEditMode: boolean;
     showModal: modalT;
     activeTab: string;
+    getEvents: { (): void };
 
     addModal: { (): void };
     updModal: { (event: eventT): void };

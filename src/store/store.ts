@@ -1,11 +1,14 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, configure } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 import initEvents from './InitEvents'
 import modalT from '../models/ModalModel'
+import { eventsAPI } from '../api/api'
 
-const day = "DAY"
-const month = "MONTH"
+configure({ enforceActions: 'observed' });
+
+const day = 'DAY'
+const month = 'MONTH'
 const year = 'YEAR'
 
 type monthType = {
@@ -18,6 +21,8 @@ type dayType = {
     month: number,
     day: number
 }
+
+// localStorage.setItem('browser_notificator', JSON.stringify(initEvents))  
 
 const getDay = (events: eventT[]): dataItem[] => {
     let arr = events.map((i) => ({ year: i.year, month: i.month, day: i.day }))
@@ -96,6 +101,7 @@ const initValue = {
     prior: 'высокий',
 }
 
+
 class Store {
 
     constructor() {
@@ -107,6 +113,17 @@ class Store {
     isEditMode: boolean = true;
     showModal: modalT = { isShowModal: false, event: initValue };
     activeTab: string = day;
+
+    getEvents = async () => {
+        const data = await eventsAPI.getData()
+
+        if (typeof data === 'string') {
+            this.events = (JSON.parse(data))
+            this._updateStore()
+        }
+
+    }
+
 
     setEvent = (obj: any) => {
         const date = new Date(obj['date-picker']);
@@ -208,6 +225,8 @@ class Store {
     };
 
     _updateStore = () => {
+        eventsAPI.setData(this.events);
+
         switch (this.activeTab) {
             case (year):
                 this.setTabYear();
@@ -224,5 +243,6 @@ class Store {
         }
     }
 }
+
 
 export default new Store();
