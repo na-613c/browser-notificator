@@ -2,8 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Table, Popconfirm, Button, Input, Space } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { SearchOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 
 type Props = { event: EventModel[]; store: StoreT };
@@ -151,8 +150,8 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       dataIndex: 'operation',
       render: (_: any, row: any) => {
         return (
-          !!store.isEditMode &&  (
-            <span style={{ display: 'inline' }}>
+          !!store.isEditMode && (
+            <Space>
               <Button
                 onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
                 type="dashed"
@@ -166,14 +165,21 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
                 onConfirm={() => store.deleteEvent(row.key)}>
                 <Button danger type="dashed" icon={<DeleteOutlined />} size="large" />
               </Popconfirm>
-            </span>
+            </Space>
           )
         );
       },
     },
   ];
 
-  return <Table columns={columns} loading={store.loading} dataSource={eventData} locale={{emptyText:'Нет данных'}} />;
+  return (
+    <Table
+      columns={columns}
+      loading={store.loading}
+      dataSource={eventData}
+      locale={{ emptyText: 'Нет данных' }}
+    />
+  );
 };
 
 export default observer(EventList);

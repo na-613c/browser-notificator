@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import StoreT from '../../models/StoreModel';
 import eventT from '../../models/EventModel';
-import { notification, Alert } from 'antd';
+import { notification } from 'antd';
 import { ThunderboltOutlined, BulbOutlined, StarOutlined } from '@ant-design/icons';
 
 type Props = { store: StoreT };
