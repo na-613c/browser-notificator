@@ -19,8 +19,8 @@ const AddForm: FunctionComponent<Props> = ({ form }) => {
       </Form.Item>
       <Form.Item label="Позиция" name="position" hasFeedback>
         <Select style={{ width: 120 }}>
-          <Option value="left">Лево</Option>
-          <Option value="right">Право</Option>
+          <Option value="Left">Лево</Option>
+          <Option value="Right">Право</Option>
         </Select>
       </Form.Item>
       <Form.Item label="Приоритет" name="prior" hasFeedback>

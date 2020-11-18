@@ -11,6 +11,8 @@ export default interface StoreT {
     showModal: modalT;
     activeTab: string;
     loading: boolean;
+    eventCome: string;
+
     getEvents: { (): void };
 
     addModal: { (): void };

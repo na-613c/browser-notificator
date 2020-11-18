@@ -14,14 +14,14 @@ const AlertEvent: FunctionComponent<Props> = ({ store, keyEvent }) => {
   let day = event.day.toString().length === 1 ? 0 + event.day.toString() : event.day;
   let month = event.month.toString().length === 1 ? 0 + event.month.toString() : event.month;
 
-  let d = (
+  let description = (
     <TextLoop mask>
       <div>
         Время: {day}.{month}.{event.year} {event.time}
       </div>
       <div>Повтор: {event.repeating ? 'Есть' : 'нет'}</div>
       <div>
-        Положение: {event.position === 'left' ? <AlignLeftOutlined /> : <AlignRightOutlined />}
+        Положение: {event.position === 'Left' ? <AlignLeftOutlined /> : <AlignRightOutlined />}
       </div>
       <div>Приоритет: {event.prior}</div>
     </TextLoop>
@@ -30,7 +30,7 @@ const AlertEvent: FunctionComponent<Props> = ({ store, keyEvent }) => {
   return (
     <Alert
       message={event.event.toUpperCase()}
-      description={d}
+      description={description}
       type="info"
       showIcon
       style={{ textAlign: 'left' }}

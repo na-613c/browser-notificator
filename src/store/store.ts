@@ -110,6 +110,7 @@ class Store {
     showModal: modalT = { isShowModal: false, event: initValue };
     activeTab: string = day;
     loading: boolean = true;
+    eventCome: string = '';
 
     getEvents = async () => {
         const data = await eventsAPI.getData()
@@ -222,6 +223,7 @@ class Store {
     };
 
     _updateStore = () => {
+        this._eventTime()
         eventsAPI.setData(this.events);
         switch (this.activeTab) {
             case (year):
@@ -237,6 +239,17 @@ class Store {
                 this.setTabAll();
                 break;
         }
+    }
+
+
+    _eventTime = () => {
+        this.events.forEach((e) => {
+            let timeOut = Number(Date.parse(`${e.year}-${e.month}-${e.day}T${e.time}`)) - Number(new Date().getTime())
+            if (timeOut < 0) return
+            new Promise((resolve, reject) => {
+                setTimeout(resolve => this.eventCome = e.key, timeOut)
+            })
+        })
     }
 }
 
