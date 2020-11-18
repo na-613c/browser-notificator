@@ -1,7 +1,6 @@
 import { makeAutoObservable, configure } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
-import initEvents from './InitEvents'
 import modalT from '../models/ModalModel'
 import { eventsAPI } from '../api/api'
 
@@ -98,7 +97,6 @@ const initValue = {
     position: 'left',
     prior: 'высокий',
 }
-
 
 class Store {
 

@@ -173,7 +173,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
     },
   ];
 
-  return <Table columns={columns} loading={store.loading} dataSource={eventData} />;
+  return <Table columns={columns} loading={store.loading} dataSource={eventData} locale={{emptyText:'Нет данных'}} />;
 };
 
 export default observer(EventList);

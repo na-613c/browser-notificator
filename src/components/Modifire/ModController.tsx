@@ -9,7 +9,7 @@ type Props = { store: StoreT };
 
 const ModController: FunctionComponent<Props> = ({ store }) => {
   return (
-    <Row justify="center">
+    <Row justify="center" align="middle">
       <Col span={4}>
         <p>Режим редактирования</p>
         <Switch defaultChecked onChange={() => store.setEditMode()} />
