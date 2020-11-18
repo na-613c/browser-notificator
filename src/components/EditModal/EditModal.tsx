@@ -8,12 +8,14 @@ type Props = { store: StoreT };
 
 const EditModal: FunctionComponent<Props> = ({ store }) => {
   const [form] = Form.useForm();
+  let isShow = store.showModal.isShowData;
+  
   return (
     <Modal
-      title="Редактирование"
+      title={isShow ? 'Редактирование' : 'Создание'}
       visible={store.showModal.isShowModal}
       onCancel={() => store.setModal()}
-      okText="Добавить"
+      okText={isShow ? 'Сохранить' : 'Создать'}
       cancelText="Отмена"
       onOk={() => {
         form

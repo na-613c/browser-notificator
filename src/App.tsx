@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import DisplayTypeTab from './components/DisplayTypeTab/DisplayTypeTab';
-import ModController from './components/Commons/ModController';
+import ModController from './components/Modifire/ModController';
 import EditModal from './components/EditModal/EditModal';
 import './App.css';
 import StoreT from './models/StoreModel';
