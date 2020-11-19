@@ -1,14 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import StoreT from '../../../models/StoreModel';
+import ModalServiceModel from '../../../models/ModalServiceModel';
 import AddForm from './AddForm/AddForm';
 import UpdForm from './UpdForm/UpdForm';
 
-type Props = { store: StoreT; form: any };
+type Props = { form: any; modalService: ModalServiceModel };
 
-const EventForm: FunctionComponent<Props> = ({ store, form }) => {
-  let isShow = store.showModal.isShowData;
+const EventForm: FunctionComponent<Props> = ({ form, modalService }) => {
+  let isShow = modalService.showModal.isShowData;
 
-  return <>{isShow ? <UpdForm store={store} form={form} /> : <AddForm form={form} />}</>;
+  return (
+    <>{isShow ? <UpdForm form={form} modalService={modalService} /> : <AddForm form={form} />}</>
+  );
 };
 
 export default EventForm;

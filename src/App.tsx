@@ -18,16 +18,18 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
     store.getEvents();
   }, []);
 
+  console.log(store.modalService);
+
   return (
     <HashRouter>
       <div className="App">
         <Space direction="vertical" style={{ width: '100%' }}>
           <Title style={{ paddingTop: 20 }}>BROWSER NOTIFICATOR</Title>
-          <ModController store={store} />
+          <ModController modalService={store.modalService} />
           <SelectEvent store={store} />
         </Space>
-        <DisplayTypeTab store={store} />
-        <EditModal store={store} />
+        <DisplayTypeTab store={store} modalService={store.modalService} />
+        <EditModal store={store} modalService={store.modalService} />
         <EventMessage store={store} />
       </div>
     </HashRouter>

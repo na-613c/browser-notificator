@@ -1,8 +1,9 @@
 import { makeAutoObservable, configure } from 'mobx';
 import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
-import modalT from '../models/ModalModel'
+import ModalService from './ModalService'
 import { eventsAPI } from '../api/api'
+import ModalServiceModel from '../models/ModalServiceModel'
 
 configure({ enforceActions: 'observed' });
 
@@ -86,28 +87,19 @@ const getYear = (events: eventT[]): dataItem[] => {
     })
 }
 
-const initValue = {
-    key: '0',
-    day: 1,
-    month: 1,
-    year: 2000,
-    time: '00:00:00',
-    event: 'событие',
-    repeating: false,
-    position: 'left',
-    prior: 'высокий',
-}
 
 class Store {
 
     constructor() {
+        this.modalService = new ModalService()
         makeAutoObservable(this)
     };
 
+    
+
+    modalService;
     events: eventT[] = [];
     eventData: dataItem[] = getDay(this.events);
-    isEditMode: boolean = true;
-    showModal: modalT = { isShowModal: false, event: initValue };
     activeTab: string = '';
     loading: boolean = true;
     eventCome: string = '';
@@ -168,34 +160,6 @@ class Store {
     deleteEvent = (key: string) => {
         this.events = this.events.filter((a) => a.key !== key);
         this._updateStore();
-    };
-
-    setEditMode = () => {
-        this.isEditMode = !this.isEditMode
-    };
-
-    setModal = () => {
-        this.showModal = {
-            ...this.showModal,
-            isShowData: false,
-            isShowModal: !this.showModal.isShowModal,
-        }
-    };
-
-    addModal = () => {
-        this.showModal = {
-            ...this.showModal,
-            isShowData: false,
-            isShowModal: true,
-        }
-    };
-
-    updModal = (event: eventT) => {
-        this.showModal = {
-            event: event,
-            isShowData: true,
-            isShowModal: true,
-        }
     };
 
     setTabAll = () => {

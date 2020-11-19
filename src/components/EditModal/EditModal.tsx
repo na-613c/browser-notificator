@@ -3,42 +3,27 @@ import { Modal, Form } from 'antd';
 import { observer } from 'mobx-react';
 import StoreT from '../../models/StoreModel';
 import EventForm from './EventForm/EventForm';
+import ModalServiceModel from '../../models/ModalServiceModel';
 
-type Props = { store: StoreT };
+type Props = { store: StoreT; modalService: ModalServiceModel };
 
-const EditModal: FunctionComponent<Props> = ({ store }) => {
+const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
   const [form] = Form.useForm();
-  let isShow = store.showModal.isShowData;
+  let isShow = modalService.showModal.isShowData;
 
   return (
     <Modal
       title={isShow ? 'Редактирование' : 'Создание'}
-      visible={store.showModal.isShowModal}
-      onCancel={() => store.setModal()}
+      visible={modalService.showModal.isShowModal}
+      onCancel={() => modalService.setModal()}
       okText={isShow ? 'Сохранить' : 'Создать'}
       cancelText="Отмена"
       onOk={() => {
         form
           .validateFields()
           .then((fieldsValue: any) => {
-            form.resetFields();
-
-            let date;
-            let time;
-            if (store.showModal.isShowData) {
-              let initData = store.showModal.event;
-
-              date = fieldsValue['date-picker']
-                ? fieldsValue['date-picker'].format('YYYY-MM-DD')
-                : `${initData.year}-${initData.month}-${initData.day}`;
-
-              time = fieldsValue['time-picker']
-                ? fieldsValue['time-picker'].format('HH:mm:ss')
-                : initData.time;
-            } else {
-              date = fieldsValue['date-picker'].format('YYYY-MM-DD');
-              time = fieldsValue['time-picker'].format('HH:mm:ss');
-            }
+            const date = fieldsValue['date-picker'].format('YYYY-MM-DD');
+            const time = fieldsValue['time-picker'].format('HH:mm:ss');
 
             const value = {
               ...fieldsValue,
@@ -46,20 +31,20 @@ const EditModal: FunctionComponent<Props> = ({ store }) => {
               'time-picker': time,
             };
 
-            if (store.showModal.isShowData) {
-              store.updateEvent(value, store.showModal.event.key);
+            if (isShow) {
+              store.updateEvent(value, modalService.showModal.event.key);
             } else {
               store.setEvent(value);
             }
 
             console.log('Success:', value);
-            store.setModal();
+            modalService.setModal();
           })
           .catch((info: any) => {
-            console.log('Validate Failed:', info);
+            console.info('Validate Failed:', info);
           });
       }}>
-      <EventForm store={store} form={form} />
+      <EventForm modalService={modalService} form={form} />
     </Modal>
   );
 };

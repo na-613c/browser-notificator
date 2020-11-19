@@ -1,29 +1,26 @@
 import eventT from './EventModel'
 import dataItem from './DataItemModel'
-import modalT from './ModalModel'
+import ModalServiceModel from './ModalServiceModel'
 
 
 
 export default interface StoreT {
     events: eventT[];
     eventData: dataItem[];
-    isEditMode: boolean;
-    showModal: modalT;
+
+    modalService: ModalServiceModel;
+
+
     activeTab: string;
     loading: boolean;
     eventCome: string;
 
     getEvents: { (): void };
 
-    addModal: { (): void };
-    updModal: { (event: eventT): void };
-    setModal: { (): void };
-
     setEvent: { (event: any): void };
     updateEvent: { (event: any, key: string): void };
     deleteEvent: { (key: string): void };
 
-    setEditMode: { (): void };
 
     setTabAll: { (): void };
     setTabDay: { (): void };

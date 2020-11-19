@@ -2,11 +2,12 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Table, Popconfirm, Button, Input, Space } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
+import ModalServiceModel from '../../../../models/ModalServiceModel';
 import NoData from '../../../Common/NoData';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 
-type Props = { event: EventModel[]; store: StoreT };
+type Props = { event: EventModel[]; store: StoreT; modalService: ModalServiceModel };
 
 interface eventT {
   key: string;
@@ -20,18 +21,7 @@ interface eventT {
   prior: string;
 }
 
-const getPrior = (element: string) => {
-  switch (element) {
-    case 'высокий':
-      return 3;
-    case 'средний':
-      return 2;
-    default:
-      return 1;
-  }
-};
-
-const EventList: FunctionComponent<Props> = ({ event, store }) => {
+const EventList: FunctionComponent<Props> = ({ event, store, modalService }) => {
   let events: eventT[] = event.map((i) => {
     return {
       key: i.key,
@@ -55,6 +45,17 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
   useEffect(() => {
     setEventData([...events]);
   }, [event]);
+
+  const getPrior = (element: string) => {
+    switch (element) {
+      case 'высокий':
+        return 3;
+      case 'средний':
+        return 2;
+      default:
+        return 1;
+    }
+  };
 
   const handleSearch = () => {
     switch (state.searchedColumn) {
@@ -119,7 +120,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       title: 'Событие',
       dataIndex: 'event',
       key: 'event',
-      width: store.isEditMode ? '30%' : '40%',
+      width: modalService.isEditMode ? '30%' : '40%',
       sorter: (a: any, b: any) => (a.event > b.event ? 1 : -1),
       ...getColumnSearchProps('event', 'Событие'),
     },
@@ -147,14 +148,14 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       ...getColumnSearchProps('prior', 'Приоритет'),
     },
     {
-      title: store.isEditMode && 'Действия',
+      title: modalService.isEditMode && 'Действия',
       dataIndex: 'operation',
       render: (_: any, row: any) => {
         return (
-          store.isEditMode && (
+          modalService.isEditMode && (
             <Space>
               <Button
-                onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
+                onClick={() => modalService.updModal({ ...row, repeating: 'да' === row.repeating })}
                 type="dashed"
                 icon={<EditOutlined />}
                 size="large"
@@ -179,7 +180,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       loading={store.loading}
       dataSource={eventData}
       locale={{ emptyText: <NoData /> }}
-      style={{ width: store.isEditMode ? '100%' : '80%', margin: '0 auto' }}
+      style={{ width: modalService.isEditMode ? '100%' : '80%', margin: '0 auto' }}
     />
   );
 };

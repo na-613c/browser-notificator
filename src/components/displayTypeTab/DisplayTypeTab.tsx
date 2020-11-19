@@ -4,32 +4,37 @@ import StoreT from '../../models/StoreModel';
 import { Tabs, Typography } from 'antd';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
+import ModalServiceModel from '../../models/ModalServiceModel';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
-type Props = { store: StoreT };
+type Props = { store: StoreT; modalService: ModalServiceModel };
 
-const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
+const DisplayTypeTab: FunctionComponent<Props> = ({ store, modalService }) => {
   const [state, setState] = useState('1');
 
   return (
     <div
-      style={{ width: store.isEditMode ? '100%' : '80%', margin: '0 auto', transition: '0.4s' }}
+      style={{
+        width: modalService.isEditMode ? '100%' : '80%',
+        margin: '0 auto',
+        transition: '0.4s',
+      }}
       className="card-container">
       <Title level={2}>Выберите тип отображения</Title>
       <Tabs activeKey={state}>
         <TabPane tab={<NavLink to="/day">День</NavLink>} key="1">
-          <DateTab store={store} />
+          <DateTab store={store} modalService={modalService} />
         </TabPane>
         <TabPane tab={<NavLink to="/month">Месяц</NavLink>} key="2">
-          <DateTab store={store} />
+          <DateTab store={store} modalService={modalService} />
         </TabPane>
         <TabPane tab={<NavLink to="/year">Год</NavLink>} key="3">
-          <DateTab store={store} />
+          <DateTab store={store} modalService={modalService} />
         </TabPane>
         <TabPane tab={<NavLink to="/">Всё</NavLink>} key="4">
-          <DateTab store={store} />
+          <DateTab store={store} modalService={modalService} />
         </TabPane>
       </Tabs>
 

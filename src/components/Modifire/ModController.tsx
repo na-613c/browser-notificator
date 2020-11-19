@@ -2,22 +2,22 @@ import React, { FunctionComponent } from 'react';
 import { observer } from 'mobx-react';
 import { Row, Col, Switch, Button } from 'antd';
 
-import StoreT from '../../models/StoreModel';
+import ModalServiceModel from '../../models/ModalServiceModel';
 
-type Props = { store: StoreT };
+type Props = { modalService: ModalServiceModel };
 
-const ModController: FunctionComponent<Props> = ({ store }) => {
+const ModController: FunctionComponent<Props> = ({ modalService }) => {
   return (
     <Row justify="center" align="middle">
       <Col xs={16} sm={12} md={12} lg={8} xl={4} xxl={4}>
         <div style={{ marginBottom: 8 }}>
           <p>Режим редактирования</p>
-          <Switch defaultChecked onChange={() => store.setEditMode()} />
+          <Switch defaultChecked onChange={() => modalService.setEditMode()} />
         </div>
       </Col>
       <Col xs={16} sm={12} md={12} lg={8} xl={4} xxl={4}>
-        {store.isEditMode && (
-          <Button type="primary" onClick={() => store.addModal()}>
+        {modalService.isEditMode && (
+          <Button type="primary" onClick={() => modalService.addModal()}>
             Добавить новое событие
           </Button>
         )}
