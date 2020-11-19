@@ -25,34 +25,21 @@ const UpdForm: FunctionComponent<Props> = ({ store, form }) => {
         <Switch defaultChecked={initData.repeating} />
       </Form.Item>
 
-      <Form.Item label="Время">
-        <Form.Item
-          name="time-picker"
-          noStyle
-          rules={[{ required: true, message: 'Выбертите время !' }]}>
-          <TimePicker
-            style={{ width: 160 }}
-            defaultValue={moment(initData.time, 'HH:mm:ss')}
-            format={'HH:mm:ss'}
-            placeholder="Выбертите время"
-          />
-        </Form.Item>
+      <Form.Item label="Время" name="time-picker">
+        <TimePicker
+          style={{ width: 160 }}
+          defaultValue={moment(initData.time, 'HH:mm:ss')}
+          format={'HH:mm:ss'}
+          placeholder="Выбертите время"
+        />
       </Form.Item>
 
-      <Form.Item label="Дата">
-        <Form.Item
-          name="date-picker"
-          noStyle
-          rules={[{ required: true, message: 'Выбертите дату !' }]}>
-          <DatePicker
-            defaultValue={moment(
-              `${initData.year}-${initData.month}-${initData.day}`,
-              'YYYY-MM-DD',
-            )}
-            format={'YYYY-MM-DD'}
-            placeholder="Выбертите дату"
-          />
-        </Form.Item>
+      <Form.Item name="date-picker" label="Дата">
+        <DatePicker
+          defaultValue={moment(`${initData.year}-${initData.month}-${initData.day}`, 'YYYY-MM-DD')}
+          format={'YYYY-MM-DD'}
+          placeholder="Выбертите дату"
+        />
       </Form.Item>
 
       <Form.Item label="Позиция" name="position" hasFeedback>
