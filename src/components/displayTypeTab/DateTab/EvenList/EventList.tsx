@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Table, Popconfirm, Button, Input, Space } from 'antd';
 import EventModel from '../../../../models/EventModel';
 import StoreT from '../../../../models/StoreModel';
+import NoData from '../../../Common/NoData';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 
@@ -177,7 +178,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       columns={columns}
       loading={store.loading}
       dataSource={eventData}
-      locale={{ emptyText: 'Нет данных' }}
+      locale={{ emptyText: <NoData /> }}
       style={{ width: store.isEditMode ? '100%' : '80%', margin: '0 auto' }}
     />
   );

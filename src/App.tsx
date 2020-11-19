@@ -22,7 +22,7 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
     <HashRouter>
       <div className="App">
         <Space direction="vertical" style={{ width: '100%' }}>
-          <Title>BROWSER NOTIFICATOR</Title>
+          <Title style={{ paddingTop: 20 }}>BROWSER NOTIFICATOR</Title>
           <ModController store={store} />
           <SelectEvent store={store} />
         </Space>

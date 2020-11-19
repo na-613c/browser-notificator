@@ -9,7 +9,7 @@ const { TabPane } = Tabs;
 type Props = { store: StoreT };
 
 const DateTab: FunctionComponent<Props> = ({ store }) => {
-  const dateTab = store.eventData.map((e, id) => {
+  let dateTab = store.eventData.map((e, id) => {
     return (
       <TabPane tab={e.title} key={id}>
         <EventList event={e.event} store={store} />
@@ -17,6 +17,12 @@ const DateTab: FunctionComponent<Props> = ({ store }) => {
     );
   });
 
+  if (!dateTab.length)
+    dateTab = [
+      <TabPane tab="Нет данных" key={1}>
+        <EventList event={[]} store={store} />
+      </TabPane>,
+    ];
   return <Tabs defaultActiveKey="0">{dateTab}</Tabs>;
 };
 
