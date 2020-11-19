@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import DisplayTypeTab from './components/DisplayTypeTab/DisplayTypeTab';
 import ModController from './components/Modifire/ModController';
 import EditModal from './components/EditModal/EditModal';
@@ -19,7 +19,7 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Space direction="vertical" style={{ width: '100%' }}>
           <Title>BROWSER NOTIFICATOR</Title>
@@ -30,7 +30,7 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
         <EditModal store={store} />
         <EventMessage store={store} />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

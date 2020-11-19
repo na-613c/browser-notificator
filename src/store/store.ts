@@ -108,7 +108,7 @@ class Store {
     eventData: dataItem[] = getDay(this.events);
     isEditMode: boolean = true;
     showModal: modalT = { isShowModal: false, event: initValue };
-    activeTab: string = day;
+    activeTab: string = '';
     loading: boolean = true;
     eventCome: string = '';
 
