@@ -102,7 +102,7 @@ class Store {
 
     constructor() {
         makeAutoObservable(this)
-    }
+    };
 
     events: eventT[] = [];
     eventData: dataItem[] = getDay(this.events);
@@ -120,8 +120,7 @@ class Store {
             this._updateStore()
         }
         this.loading = false;
-    }
-
+    };
 
     setEvent = (obj: any) => {
         const date = new Date(obj['date-picker']);
@@ -140,7 +139,7 @@ class Store {
 
         this.events.push(event);
         this._updateStore();
-    }
+    };
 
     updateEvent = (obj: any, key: string) => {
 
@@ -164,12 +163,12 @@ class Store {
         });
 
         this._updateStore();
-    }
+    };
 
     deleteEvent = (key: string) => {
         this.events = this.events.filter((a) => a.key !== key);
         this._updateStore();
-    }
+    };
 
     setEditMode = () => {
         this.isEditMode = !this.isEditMode
@@ -189,7 +188,7 @@ class Store {
             isShowData: false,
             isShowModal: true,
         }
-    }
+    };
 
     updModal = (event: eventT) => {
         this.showModal = {
@@ -197,7 +196,7 @@ class Store {
             isShowData: true,
             isShowModal: true,
         }
-    }
+    };
 
     setTabAll = () => {
         this.activeTab = '';
@@ -239,8 +238,7 @@ class Store {
                 this.setTabAll();
                 break;
         }
-    }
-
+    };
 
     _eventTime = () => {
         this.events.forEach((e) => {
@@ -250,7 +248,7 @@ class Store {
                 setTimeout(resolve => this.eventCome = e.key, timeOut)
             })
         })
-    }
+    };
 }
 
 

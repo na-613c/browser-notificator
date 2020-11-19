@@ -1,16 +1,16 @@
 import React, { FunctionComponent, useState } from 'react';
 import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
-import { Tabs } from 'antd';
-import { Typography } from 'antd';
+import { Tabs, Typography } from 'antd';
 import { NavLink, Route, Switch } from 'react-router-dom';
+
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
 type Props = { store: StoreT };
 
 const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
-  const [state, setstate] = useState('1');
+  const [state, setState] = useState('1');
 
   return (
     <div className="card-container">
@@ -34,32 +34,36 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
         <Route
           path="/day"
           component={() => {
-            setstate('1');
+            setState('1');
             store.setTabDay();
             return <></>;
-          }}/>
+          }}
+        />
         <Route
           path="/month"
           component={() => {
-            setstate('2');
+            setState('2');
             store.setTabMonth();
             return <></>;
-          }}/>
+          }}
+        />
         <Route
           path="/year"
           component={() => {
-            setstate('3');
+            setState('3');
             store.setTabYear();
             return <></>;
-          }}/>
+          }}
+        />
         <Route
           exact
           path="/"
           component={() => {
-            setstate('4');
+            setState('4');
             store.setTabAll();
             return <></>;
-          }}/>
+          }}
+        />
       </Switch>
     </div>
   );

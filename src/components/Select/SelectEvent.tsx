@@ -2,15 +2,18 @@ import React, { FunctionComponent, useState } from 'react';
 import { observer } from 'mobx-react';
 import StoreT from '../../models/StoreModel';
 import AlertEvent from './AlertEvent/AlertEvent';
-import { Select } from 'antd';
-import { Typography, Row, Col } from 'antd';
+import { Row, Col, Select } from 'antd';
 
 const { Option } = Select;
 
 type Props = { store: StoreT };
 
 const SelectEvent: FunctionComponent<Props> = ({ store }) => {
-  let eventsTitl = store.events.map((e) => <Option value={e.key}>{e.event}</Option>);
+  let eventsTitl = store.events.map((e) => (
+    <Option value={e.key} key={e.key}>
+      {e.event}
+    </Option>
+  ));
 
   const onChange = (value: string) => {
     setKey(value);
@@ -21,7 +24,7 @@ const SelectEvent: FunctionComponent<Props> = ({ store }) => {
   return (
     <>
       <Row justify="space-around" align="middle">
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8} lg={7} xl={6} xxl={5}>
           <Select
             showSearch
             style={{ width: 200, textAlign: 'left' }}
@@ -34,7 +37,7 @@ const SelectEvent: FunctionComponent<Props> = ({ store }) => {
             {eventsTitl}
           </Select>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8} lg={7} xl={6} xxl={5}>
           <AlertEvent store={store} keyEvent={key} />
         </Col>
       </Row>
