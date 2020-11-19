@@ -9,7 +9,7 @@ type Props = { store: StoreT };
 const EditModal: FunctionComponent<Props> = ({ store }) => {
   const [form] = Form.useForm();
   let isShow = store.showModal.isShowData;
-  
+
   return (
     <Modal
       title={isShow ? 'Редактирование' : 'Создание'}

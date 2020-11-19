@@ -24,21 +24,44 @@ const UpdForm: FunctionComponent<Props> = ({ store, form }) => {
       <Form.Item label="Повтор" name="repeating" hasFeedback>
         <Switch defaultChecked={initData.repeating} />
       </Form.Item>
-      <Form.Item label="Время" name="time-picker" hasFeedback>
-        <TimePicker defaultValue={moment(initData.time, 'HH:mm:ss')} format={'HH:mm:ss'} />
+
+      <Form.Item label="Время">
+        <Form.Item
+          name="time-picker"
+          noStyle
+          rules={[{ required: true, message: 'Выбертите время !' }]}>
+          <TimePicker
+            style={{ width: 160 }}
+            defaultValue={moment(initData.time, 'HH:mm:ss')}
+            format={'HH:mm:ss'}
+            placeholder="Выбертите время"
+          />
+        </Form.Item>
       </Form.Item>
-      <Form.Item label="Дата" name="date-picker" hasFeedback>
-        <DatePicker
-          defaultValue={moment(`${initData.year}-${initData.month}-${initData.day}`, 'YYYY-MM-DD')}
-          format={'YYYY-MM-DD'}
-        />
+
+      <Form.Item label="Дата">
+        <Form.Item
+          name="date-picker"
+          noStyle
+          rules={[{ required: true, message: 'Выбертите дату !' }]}>
+          <DatePicker
+            defaultValue={moment(
+              `${initData.year}-${initData.month}-${initData.day}`,
+              'YYYY-MM-DD',
+            )}
+            format={'YYYY-MM-DD'}
+            placeholder="Выбертите дату"
+          />
+        </Form.Item>
       </Form.Item>
+
       <Form.Item label="Позиция" name="position" hasFeedback>
         <Select style={{ width: 120 }}>
           <Option value="Left">Лево</Option>
           <Option value="Right">Право</Option>
         </Select>
       </Form.Item>
+
       <Form.Item label="Приоритет" name="prior" hasFeedback>
         <Select style={{ width: 120 }}>
           <Option value="высокий">Высокий</Option>
@@ -46,8 +69,15 @@ const UpdForm: FunctionComponent<Props> = ({ store, form }) => {
           <Option value="низкий">Низкий</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Событие" name="event" hasFeedback>
-        <Input placeholder="Описание события" />
+
+      <Form.Item label="Событие">
+        <Form.Item
+          label="Событие"
+          name="event"
+          noStyle
+          rules={[{ required: true, message: 'Введите название события !' }]}>
+          <Input placeholder="Описание события" allowClear />
+        </Form.Item>
       </Form.Item>
     </Form>
   );
