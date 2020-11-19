@@ -9,7 +9,7 @@ type Props = { store: StoreT; modalService: ModalServiceModel };
 
 const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
   const [form] = Form.useForm();
-  let isShow = modalService.showModal.isShowData;
+  const isShow = modalService.showModal.isShowData;
 
   return (
     <Modal
@@ -24,7 +24,7 @@ const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
           .then((fieldsValue: any) => {
             const date = fieldsValue['date-picker'].format('YYYY-MM-DD');
             const time = fieldsValue['time-picker'].format('HH:mm:ss');
-
+            
             const value = {
               ...fieldsValue,
               'date-picker': date,
