@@ -3,6 +3,7 @@ import DateTab from './DateTab/DateTab';
 import StoreT from '../../models/StoreModel';
 import { Tabs, Typography } from 'antd';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -13,7 +14,9 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   const [state, setState] = useState('1');
 
   return (
-    <div className="card-container">
+    <div
+      style={{ width: store.isEditMode ? '100%' : '80%', margin: '0 auto', transition: '0.4s' }}
+      className="card-container">
       <Title level={2}>Выберите тип отображения</Title>
       <Tabs activeKey={state}>
         <TabPane tab={<NavLink to="/day">День</NavLink>} key="1">
@@ -69,4 +72,4 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store }) => {
   );
 };
 
-export default DisplayTypeTab;
+export default observer(DisplayTypeTab);

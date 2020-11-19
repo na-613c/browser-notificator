@@ -118,7 +118,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       title: 'Событие',
       dataIndex: 'event',
       key: 'event',
-      width: '30%',
+      width: store.isEditMode ? '30%' : '40%',
       sorter: (a: any, b: any) => (a.event > b.event ? 1 : -1),
       ...getColumnSearchProps('event', 'Событие'),
     },
@@ -146,11 +146,11 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       ...getColumnSearchProps('prior', 'Приоритет'),
     },
     {
-      title: !!store.isEditMode && 'Действия',
+      title: store.isEditMode && 'Действия',
       dataIndex: 'operation',
       render: (_: any, row: any) => {
         return (
-          !!store.isEditMode && (
+          store.isEditMode && (
             <Space>
               <Button
                 onClick={() => store.updModal({ ...row, repeating: 'да' === row.repeating })}
@@ -178,6 +178,7 @@ const EventList: FunctionComponent<Props> = ({ event, store }) => {
       loading={store.loading}
       dataSource={eventData}
       locale={{ emptyText: 'Нет данных' }}
+      style={{ width: store.isEditMode ? '100%' : '80%', margin: '0 auto' }}
     />
   );
 };
