@@ -8,8 +8,12 @@ import EventServiceModel from '../../models/EventServiceModel';
 type Props = { eventService: EventServiceModel };
 
 const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
+  let currentEvents = eventService.currentEvents;
+
   useEffect(() => {
-    let a: EventModel[] = eventService.events.filter((e) => e.key === eventService.eventCome);
+    let a: EventModel[] = currentEvents.map((e) => {
+      return eventService.events.filter((i) => i.key === e)[0];
+    });
 
     a.forEach((e) => {
       openNotification(`top${e.position}`, e);
@@ -22,8 +26,9 @@ const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
         };
         eventService.updateEvent(reEvent, e.key);
       }
+      eventService.removePastEvent();
     });
-  }, [eventService.eventCome]);
+  });
 
   const openNotification = (placement: any, e: EventModel) => {
     let notificationStyle;

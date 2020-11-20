@@ -1,4 +1,3 @@
-import dataItem from '../models/DataItemModel'
 import eventT from '../models/EventModel'
 import storeModel from '../models/StoreModel'
 import { makeAutoObservable } from 'mobx';
@@ -16,7 +15,7 @@ class EventService {
     store;
     events: eventT[] = [];
     loading: boolean = true;
-    eventCome: string = '';
+    currentEvents: string[] = [];
 
     getEvents = async () => {
         const data = await eventsAPI.getData()
@@ -77,14 +76,25 @@ class EventService {
     };
 
     _eventTime = () => {
-        this.events.forEach((e) => {
-            let timeOut = Number(Date.parse(`${e.year}-${e.month}-${e.day}T${e.time}`)) - Number(new Date().getTime())
-            if (timeOut < 0) return this.eventCome = '';
-            new Promise((resolve, reject) => {
-                setTimeout(resolve => this.eventCome = e.key, timeOut)
-            })
+        let timeArr = this.events.map((i) => `${i.year}-${i.month}-${i.day}T${i.time}`)
+
+        let OneTimeEventsArray = Array.from(new Set(timeArr)).sort().reverse().map((i) => {
+            return {
+                time: i,
+                events: this.events.filter((v) => `${v.year}-${v.month}-${v.day}T${v.time}` === i)
+            }
+        })
+
+        OneTimeEventsArray.forEach((e) => {
+            let timeOut = Number(Date.parse(e.time)) - Number(new Date().getTime())
+            if (timeOut < 0) return;
+            setTimeout(() => this.currentEvents = e.events.map((i) => i.key), timeOut)
         })
     };
+
+    removePastEvent = () => {
+        this.currentEvents = []
+    }
 
 }
 
