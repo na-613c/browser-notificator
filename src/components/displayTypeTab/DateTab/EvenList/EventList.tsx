@@ -1,13 +1,11 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Table, Popconfirm, Button, Input, Space } from 'antd';
-import EventModel from '../../../../models/EventModel';
-import StoreT from '../../../../models/StoreModel';
-import ModalServiceModel from '../../../../models/ModalServiceModel';
 import NoData from '../../../Common/NoData';
+import EventModel from '../../../../models/EventModel';
+import ModalServiceModel from '../../../../models/ModalServiceModel';
+import EventServiceModel from '../../../../models/EventServiceModel';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
-
-type Props = { event: EventModel[]; store: StoreT; modalService: ModalServiceModel };
 
 interface eventT {
   key: string;
@@ -21,7 +19,13 @@ interface eventT {
   prior: string;
 }
 
-const EventList: FunctionComponent<Props> = ({ event, store, modalService }) => {
+type Props = {
+  event: EventModel[];
+  eventService: EventServiceModel;
+  modalService: ModalServiceModel;
+};
+
+const EventList: FunctionComponent<Props> = ({ event, eventService, modalService }) => {
   let events: eventT[] = event.map((i) => {
     return {
       key: i.key,
@@ -164,7 +168,7 @@ const EventList: FunctionComponent<Props> = ({ event, store, modalService }) => 
                 title="Действительно удалить?"
                 okText="Удалить"
                 cancelText="Отмена"
-                onConfirm={() => store.deleteEvent(row.key)}>
+                onConfirm={() => eventService.deleteEvent(row.key)}>
                 <Button danger type="dashed" icon={<DeleteOutlined />} size="large" />
               </Popconfirm>
             </Space>
@@ -177,7 +181,7 @@ const EventList: FunctionComponent<Props> = ({ event, store, modalService }) => 
   return (
     <Table
       columns={columns}
-      loading={store.loading}
+      loading={eventService.loading}
       dataSource={eventData}
       locale={{ emptyText: <NoData /> }}
       style={{ margin: '0 auto' }}

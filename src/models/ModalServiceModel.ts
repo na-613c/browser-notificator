@@ -11,5 +11,4 @@ export default interface ModalServiceModel {
     updModal: { (event: eventT): void };
     setModal: { (): void };
     setEditMode: { (): void };
-
 }

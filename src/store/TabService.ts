@@ -100,28 +100,28 @@ class TabService {
         this.activeTab = '';
         this.eventData = [{
             title: 'Все уведомления',
-            event: [...this.store.events]
+            event: [...this.store.eventService.events]
         }];
     };
 
     setTabDay = () => {
         this.activeTab = day;
-        this.eventData = getDay(this.store.events)
+        this.eventData = getDay(this.store.eventService.events)
     };
 
     setTabMonth = () => {
         this.activeTab = month;
-        this.eventData = getMonth(this.store.events)
+        this.eventData = getMonth(this.store.eventService.events)
     };
 
     setTabYear = () => {
         this.activeTab = year;
-        this.eventData = getYear(this.store.events)
+        this.eventData = getYear(this.store.eventService.events)
     };
 
     _updateStore = () => {
-        this.store._eventTime()
-        eventsAPI.setData(this.store.events);
+        this.store.eventService._eventTime()
+        eventsAPI.setData(this.store.eventService.events);
         switch (this.activeTab) {
             case (year):
                 this.setTabYear();

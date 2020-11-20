@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { observer } from 'mobx-react';
-import StoreT from '../../../models/StoreModel';
+import EventServiceModel from '../../../models/EventServiceModel';
 import { AlignLeftOutlined, AlignRightOutlined } from '@ant-design/icons';
 import TextLoop from 'react-text-loop';
 import { Alert } from 'antd';
 
-type Props = { store: StoreT; keyEvent: string };
+type Props = { eventService: EventServiceModel; keyEvent: string };
 
-const AlertEvent: FunctionComponent<Props> = ({ store, keyEvent }) => {
-  let [event] = store.events.filter((e) => e.key === keyEvent);
+const AlertEvent: FunctionComponent<Props> = ({ eventService, keyEvent }) => {
+  let [event] = eventService.events.filter((e) => e.key === keyEvent);
   if (!event) return <></>;
 
   let day = event.day.toString().length === 1 ? 0 + event.day.toString() : event.day;

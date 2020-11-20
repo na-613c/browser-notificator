@@ -1,18 +1,22 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import DateTab from './DateTab/DateTab';
-import StoreT from '../../models/StoreModel';
 import { Tabs, Typography } from 'antd';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import ModalServiceModel from '../../models/ModalServiceModel';
 import TabModel from '../../models/TabServiceModel';
+import EventServiceModel from '../../models/EventServiceModel';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
-type Props = { store: StoreT; modalService: ModalServiceModel; tabService: TabModel };
+type Props = {
+  eventService: EventServiceModel;
+  modalService: ModalServiceModel;
+  tabService: TabModel;
+};
 
-const DisplayTypeTab: FunctionComponent<Props> = ({ store, modalService, tabService }) => {
+const DisplayTypeTab: FunctionComponent<Props> = ({ eventService, modalService, tabService }) => {
   const [state, setState] = useState('');
 
   useEffect(() => {
@@ -43,16 +47,32 @@ const DisplayTypeTab: FunctionComponent<Props> = ({ store, modalService, tabServ
       <Title level={2}>Выберите тип отображения</Title>
       <Tabs activeKey={state}>
         <TabPane tab={<NavLink to="/day">День</NavLink>} key="1">
-          <DateTab store={store} tabService={tabService} modalService={modalService} />
+          <DateTab
+            eventService={eventService}
+            tabService={tabService}
+            modalService={modalService}
+          />
         </TabPane>
         <TabPane tab={<NavLink to="/month">Месяц</NavLink>} key="2">
-          <DateTab store={store} tabService={tabService} modalService={modalService} />
+          <DateTab
+            eventService={eventService}
+            tabService={tabService}
+            modalService={modalService}
+          />
         </TabPane>
         <TabPane tab={<NavLink to="/year">Год</NavLink>} key="3">
-          <DateTab store={store} tabService={tabService} modalService={modalService} />
+          <DateTab
+            eventService={eventService}
+            tabService={tabService}
+            modalService={modalService}
+          />
         </TabPane>
         <TabPane tab={<NavLink to="/">Всё</NavLink>} key="4">
-          <DateTab store={store} tabService={tabService} modalService={modalService} />
+          <DateTab
+            eventService={eventService}
+            tabService={tabService}
+            modalService={modalService}
+          />
         </TabPane>
       </Tabs>
 

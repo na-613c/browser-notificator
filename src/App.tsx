@@ -5,8 +5,8 @@ import ModController from './components/Modifire/ModController';
 import EditModal from './components/EditModal/EditModal';
 import SelectEvent from './components/Select/SelectEvent';
 import EventMessage from './components/EventMessage/EventMessage';
-import './App.css';
 import StoreT from './models/StoreModel';
+import './App.css';
 import { Typography, Space } from 'antd';
 
 const { Title } = Typography;
@@ -15,7 +15,7 @@ type AppProps = { store: StoreT };
 
 const App: FunctionComponent<AppProps> = ({ store }) => {
   useEffect(() => {
-    store.getEvents();
+    store.eventService.getEvents();
   }, []);
 
   console.log(store.modalService);
@@ -26,15 +26,15 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
         <Space direction="vertical" style={{ width: '100%' }}>
           <Title style={{ paddingTop: 20 }}>BROWSER NOTIFICATOR</Title>
           <ModController modalService={store.modalService} />
-          <SelectEvent store={store} />
+          <SelectEvent eventService={store.eventService} />
         </Space>
         <DisplayTypeTab
           tabService={store.tabService}
-          store={store}
+          eventService={store.eventService}
           modalService={store.modalService}
         />
-        <EditModal store={store} modalService={store.modalService} />
-        <EventMessage store={store} />
+        <EditModal eventService={store.eventService} modalService={store.modalService} />
+        <EventMessage eventService={store.eventService} />
       </div>
     </HashRouter>
   );

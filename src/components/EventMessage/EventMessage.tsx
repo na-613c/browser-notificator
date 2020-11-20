@@ -1,22 +1,22 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import StoreT from '../../models/StoreModel';
-import eventT from '../../models/EventModel';
+import EventModel from '../../models/EventModel';
 import { notification } from 'antd';
 import { ThunderboltOutlined, BulbOutlined, StarOutlined } from '@ant-design/icons';
+import EventServiceModel from '../../models/EventServiceModel';
 
-type Props = { store: StoreT };
+type Props = { eventService: EventServiceModel };
 
-const EventMessage: FunctionComponent<Props> = ({ store }) => {
+const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
   useEffect(() => {
-    let a: eventT[] = store.events.filter((e) => e.key === store.eventCome);
+    let a: EventModel[] = eventService.events.filter((e) => e.key === eventService.eventCome);
 
     a.forEach((e) => {
       openNotification(`top${e.position}`, e);
     });
-  }, [store.eventCome]);
+  }, [eventService.eventCome]);
 
-  const openNotification = (placement: any, e: eventT) => {
+  const openNotification = (placement: any, e: EventModel) => {
     let notificationStyle;
     switch (e.prior) {
       case 'высокий':

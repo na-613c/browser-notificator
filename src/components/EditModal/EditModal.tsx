@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { Modal, Form } from 'antd';
 import { observer } from 'mobx-react';
-import StoreT from '../../models/StoreModel';
 import EventForm from './EventForm/EventForm';
 import ModalServiceModel from '../../models/ModalServiceModel';
+import EventServiceModel from '../../models/EventServiceModel';
 
-type Props = { store: StoreT; modalService: ModalServiceModel };
+type Props = { eventService: EventServiceModel; modalService: ModalServiceModel };
 
-const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
+const EditModal: FunctionComponent<Props> = ({ eventService, modalService }) => {
   const [form] = Form.useForm();
   const isShow = modalService.showModal.isShowData;
 
@@ -24,7 +24,7 @@ const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
           .then((fieldsValue: any) => {
             const date = fieldsValue['date-picker'].format('YYYY-MM-DD');
             const time = fieldsValue['time-picker'].format('HH:mm:ss');
-            
+
             const value = {
               ...fieldsValue,
               'date-picker': date,
@@ -32,9 +32,9 @@ const EditModal: FunctionComponent<Props> = ({ store, modalService }) => {
             };
 
             if (isShow) {
-              store.updateEvent(value, modalService.showModal.event.key);
+              eventService.updateEvent(value, modalService.showModal.event.key);
             } else {
-              store.setEvent(value);
+              eventService.setEvent(value);
             }
 
             console.log('Success:', value);
