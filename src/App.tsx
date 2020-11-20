@@ -28,7 +28,11 @@ const App: FunctionComponent<AppProps> = ({ store }) => {
           <ModController modalService={store.modalService} />
           <SelectEvent store={store} />
         </Space>
-        <DisplayTypeTab store={store} modalService={store.modalService} />
+        <DisplayTypeTab
+          tabService={store.tabService}
+          store={store}
+          modalService={store.modalService}
+        />
         <EditModal store={store} modalService={store.modalService} />
         <EventMessage store={store} />
       </div>

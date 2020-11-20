@@ -1,6 +1,5 @@
 import initValue from './InitValue'
 import eventT from '../models/EventModel'
-import ModalServiceModel from '../models/ModalServiceModel'
 import { makeAutoObservable } from 'mobx';
 
 

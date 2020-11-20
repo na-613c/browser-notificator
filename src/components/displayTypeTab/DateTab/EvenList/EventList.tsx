@@ -180,7 +180,7 @@ const EventList: FunctionComponent<Props> = ({ event, store, modalService }) => 
       loading={store.loading}
       dataSource={eventData}
       locale={{ emptyText: <NoData /> }}
-      style={{ width: modalService.isEditMode ? '100%' : '80%', margin: '0 auto' }}
+      style={{ margin: '0 auto' }}
     />
   );
 };

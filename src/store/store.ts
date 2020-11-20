@@ -3,104 +3,26 @@ import eventT from '../models/EventModel'
 import dataItem from '../models/DataItemModel'
 import ModalService from './ModalService'
 import { eventsAPI } from '../api/api'
+import TabService from './TabService'
+import TabModel from '../models/TabModel'
 import ModalServiceModel from '../models/ModalServiceModel'
 
+
 configure({ enforceActions: 'observed' });
-
-const day = 'DAY'
-const month = 'MONTH'
-const year = 'YEAR'
-
-type monthType = {
-    year: number,
-    month: number
-}
-
-type dayType = {
-    year: number,
-    month: number,
-    day: number
-}
-
-const getDay = (events: eventT[]): dataItem[] => {
-    let arr = events.map((i) => ({ year: i.year, month: i.month, day: i.day }))
-    let dayArr: dayType[] = []
-
-    arr.forEach((i) => {
-        if (dayArr.some((j) => JSON.stringify(i) === JSON.stringify(j))) {
-            return null
-        }
-        return dayArr.push(i)
-    })
-
-    const sortDay = (a: dayType, b: dayType) => {
-        if (a.year === b.year && a.month === b.month) return b.day - a.day
-        if (a.year === b.year) return b.month - a.month
-        return b.year - a.year
-    }
-
-    return dayArr.sort(sortDay).map((i) => {
-        let monthString = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
-        let dayString = i.day.toString().length === 1 ? 0 + i.day.toString() : i.day;
-
-        return {
-            title: `${dayString}.${monthString}.${i.year}`,
-            event: events.filter((v) => v.year === i.year && v.month === i.month && v.day === i.day)
-        }
-    })
-}
-
-const getMonth = (events: eventT[]): dataItem[] => {
-
-    let arr = events.map((i) => ({ year: i.year, month: i.month }))
-    let monthArr: monthType[] = []
-
-    arr.forEach((i) => {
-        if (monthArr.some((j) => JSON.stringify(i) === JSON.stringify(j))) {
-            return null
-        }
-        return monthArr.push(i)
-    })
-
-    const sortMonth = (a: monthType, b: monthType) => {
-        if (a.year === b.year) return b.month - a.month
-        return b.year - a.year
-    }
-
-    return monthArr.sort(sortMonth).map((i) => {
-        let monthString = i.month.toString().length === 1 ? 0 + i.month.toString() : i.month;
-        return {
-            title: `${monthString}.${i.year}`,
-            event: events.filter((v) => v.year === i.year && v.month === i.month)
-        }
-    })
-}
-
-const getYear = (events: eventT[]): dataItem[] => {
-    let yearArr = events.map((i) => i.year)
-
-    return Array.from(new Set(yearArr)).sort().reverse().map((i) => {
-        return {
-            title: i.toString(),
-            event: events.filter((v) => v.year === i)
-        }
-    })
-}
-
 
 class Store {
 
     constructor() {
-        this.modalService = new ModalService()
+        this.modalService = new ModalService();
+        this.tabService = new TabService(this);
         makeAutoObservable(this)
     };
 
-    
+    tabService: TabModel;
+    modalService: ModalServiceModel;
 
-    modalService;
     events: eventT[] = [];
-    eventData: dataItem[] = getDay(this.events);
-    activeTab: string = '';
+
     loading: boolean = true;
     eventCome: string = '';
 
@@ -109,7 +31,7 @@ class Store {
 
         if (typeof data === 'string') {
             this.events = (JSON.parse(data))
-            this._updateStore()
+            this.tabService._updateStore()
         }
         this.loading = false;
     };
@@ -130,7 +52,7 @@ class Store {
         }
 
         this.events.push(event);
-        this._updateStore();
+        this.tabService._updateStore();
     };
 
     updateEvent = (obj: any, key: string) => {
@@ -154,54 +76,12 @@ class Store {
             return a
         });
 
-        this._updateStore();
+        this.tabService._updateStore();
     };
 
     deleteEvent = (key: string) => {
         this.events = this.events.filter((a) => a.key !== key);
-        this._updateStore();
-    };
-
-    setTabAll = () => {
-        this.activeTab = '';
-        this.eventData = [{
-            title: 'Все уведомления',
-            event: [...this.events]
-        }];
-    };
-
-    setTabDay = () => {
-        this.activeTab = day;
-        this.eventData = getDay(this.events)
-    };
-
-    setTabMonth = () => {
-        this.activeTab = month;
-        this.eventData = getMonth(this.events)
-    };
-
-    setTabYear = () => {
-        this.activeTab = year;
-        this.eventData = getYear(this.events)
-    };
-
-    _updateStore = () => {
-        this._eventTime()
-        eventsAPI.setData(this.events);
-        switch (this.activeTab) {
-            case (year):
-                this.setTabYear();
-                break;
-            case (month):
-                this.setTabMonth();
-                break;
-            case (day):
-                this.setTabDay();
-                break;
-            default:
-                this.setTabAll();
-                break;
-        }
+        this.tabService._updateStore();
     };
 
     _eventTime = () => {
