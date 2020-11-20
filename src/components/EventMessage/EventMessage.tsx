@@ -4,6 +4,7 @@ import EventModel from '../../models/EventModel';
 import { notification } from 'antd';
 import { ThunderboltOutlined, BulbOutlined, StarOutlined } from '@ant-design/icons';
 import EventServiceModel from '../../models/EventServiceModel';
+import { RedoOutlined } from '@ant-design/icons';
 
 type Props = { eventService: EventServiceModel };
 
@@ -62,8 +63,20 @@ const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
         break;
     }
 
+    let day = e.day.toString().length === 1 ? 0 + e.day.toString() : e.day;
+    let month = e.month.toString().length === 1 ? 0 + e.month.toString() : e.month;
+
     notification.open({
-      message: e.event,
+      message: (
+        <>
+          {e.event.toUpperCase()} {e.repeating ? <RedoOutlined /> : ''}
+        </>
+      ),
+      description: (
+        <div>
+          Время: {day}.{month}.{e.year} {e.time}
+        </div>
+      ),
       placement,
       ...notificationStyle,
     });
