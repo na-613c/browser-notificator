@@ -13,6 +13,15 @@ const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
 
     a.forEach((e) => {
       openNotification(`top${e.position}`, e);
+
+      if (e.repeating) {
+        let reEvent = {
+          ...e,
+          'time-picker': e.time,
+          'date-picker': `${e.year}-${e.month}-${e.day + 1}`,
+        };
+        eventService.updateEvent(reEvent, e.key);
+      }
     });
   }, [eventService.eventCome]);
 
@@ -27,7 +36,6 @@ const EventMessage: FunctionComponent<Props> = ({ eventService }) => {
             border: '1px solid #ffccc7',
           },
         };
-
         break;
       case 'средний':
         notificationStyle = {

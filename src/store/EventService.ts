@@ -79,7 +79,7 @@ class EventService {
     _eventTime = () => {
         this.events.forEach((e) => {
             let timeOut = Number(Date.parse(`${e.year}-${e.month}-${e.day}T${e.time}`)) - Number(new Date().getTime())
-            if (timeOut < 0) return
+            if (timeOut < 0) return this.eventCome = '';
             new Promise((resolve, reject) => {
                 setTimeout(resolve => this.eventCome = e.key, timeOut)
             })
