@@ -5,7 +5,7 @@ import { Tabs, Typography } from 'antd';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import ModalServiceModel from '../../models/ModalServiceModel';
-import TabModel from '../../models/TabModel';
+import TabModel from '../../models/TabServiceModel';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;

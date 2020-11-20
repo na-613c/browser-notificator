@@ -4,7 +4,7 @@ import StoreT from '../../../models/StoreModel';
 import { Tabs } from 'antd';
 import { observer } from 'mobx-react';
 import ModalServiceModel from '../../../models/ModalServiceModel';
-import TabModel from '../../../models/TabModel';
+import TabModel from '../../../models/TabServiceModel';
 
 const { TabPane } = Tabs;
 

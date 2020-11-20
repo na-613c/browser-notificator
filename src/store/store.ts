@@ -1,10 +1,9 @@
 import { makeAutoObservable, configure } from 'mobx';
 import eventT from '../models/EventModel'
-import dataItem from '../models/DataItemModel'
 import ModalService from './ModalService'
 import { eventsAPI } from '../api/api'
 import TabService from './TabService'
-import TabModel from '../models/TabModel'
+import TabModel from '../models/TabServiceModel'
 import ModalServiceModel from '../models/ModalServiceModel'
 
 

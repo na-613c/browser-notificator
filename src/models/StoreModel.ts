@@ -1,6 +1,6 @@
 import eventT from './EventModel'
 import ModalServiceModel from './ModalServiceModel'
-import TabModel from './TabModel'
+import TabModel from './TabServiceModel'
 
 
 
