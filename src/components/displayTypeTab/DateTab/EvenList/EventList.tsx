@@ -184,7 +184,7 @@ const EventList: FunctionComponent<Props> = ({ event, eventService, modalService
       loading={eventService.loading}
       dataSource={eventData}
       pagination={false}
-      scroll={{ x: 'calc(700px + 30%)', y: 240 }}
+      scroll={{ x: 950, y: 240 }}
       locale={{ emptyText: <NoData /> }}
       style={{ margin: '0 auto 40px' }}
     />
