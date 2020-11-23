@@ -183,8 +183,10 @@ const EventList: FunctionComponent<Props> = ({ event, eventService, modalService
       columns={columns}
       loading={eventService.loading}
       dataSource={eventData}
+      pagination={false}
+      scroll={{ x: 'calc(700px + 30%)', y: 240 }}
       locale={{ emptyText: <NoData /> }}
-      style={{ margin: '0 auto' }}
+      style={{ margin: '0 auto 40px' }}
     />
   );
 };
